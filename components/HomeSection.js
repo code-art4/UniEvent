@@ -24,6 +24,7 @@ import {
 const HomeSection = () => {
 	const [events, setEvents] = useState()
 	const [loading, setLoading] = useState()
+
 	const getEvents = () => {
 		try {
 			const q = query(collection(db, "events"));
@@ -44,9 +45,7 @@ const HomeSection = () => {
 	};
 
 	useEffect(() => {
-		return () => {
-			getEvents()
-		};
+		getEvents();
 	}, [])
 
 	console.log(events)
