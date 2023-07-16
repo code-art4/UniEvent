@@ -41,8 +41,8 @@ const sendEmail = (
 ) => {
 	emailjs
 		.send(
-			process.env.NEXT_PUBLIC_SERVICE_ID,
-			process.env.NEXT_PUBLIC_TEMPLATE_ID,
+			'service_nxha2yd',
+			'template_9tef9pf',
 			{
 				name,
 				email,
@@ -54,14 +54,16 @@ const sendEmail = (
 				passcode,
 				flier_url,
 			},
-			process.env.NEXT_PUBLIC_API_KEY
+			'yl1_EHEsw6Ub8EZDv'
 		)
 		.then(
 			(result) => {
+				console.log(result)
 				setLoading(false);
 				setSuccess(true);
 			},
 			(error) => {
+				console.log(error)
 				alert(error.text);
 			}
 		);
@@ -97,6 +99,8 @@ export const addEventToFirebase = async (
 		slug: createSlug(title),
 		attendees: [],
 		disableRegistration: false,
+	}).catch(e => {
+		console.log(e)
 	});
 
 	const imageRef = ref(storage, `events/${docRef.id}/image`);
@@ -229,6 +233,7 @@ export const registerAttendee = async (
 	const passcode = generateID();
 	const eventRef = doc(db, "events", event_id);
 	const eventSnap = await getDoc(eventRef);
+	// console.log(eventSnap.data().attendees.map(each => ));
 	let firebaseEvent = {};
 	if (eventSnap.exists()) {
 		firebaseEvent = eventSnap.data();
@@ -236,7 +241,7 @@ export const registerAttendee = async (
 		const result = attendees.filter((item) => item.email === email);
 		if (result.length === 0 && firebaseEvent.disableRegistration === false) {
 			await updateDoc(eventRef, {
-				attendees: arrayUnion({
+				reattendees: arrayUnion({
 					name,
 					email,
 					passcode,

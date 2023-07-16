@@ -25,10 +25,10 @@ const register = () => {
 	return (
 		<div>
 			<Head>
-				<title>Register | EventTiz</title>
+				<title>Register | UniEvent</title>
 				<meta
 					name='description'
-					content='An event ticketing system built with NextJS and Firebase'
+					content='Unilorin Events system'
 				/>
 				<meta name='viewport' content='width=device-width, initial-scale=1' />
 				<link rel='icon' href='/favicon.ico' />
@@ -104,7 +104,7 @@ const register = () => {
 					</form>
 					<div className='absolute bottom-5 left-5'>
 						<p className='opacity-50 text-sm'>
-							<Link href='/'>EventTiz</Link> &copy; Copyright{" "}
+							<Link href='/'>UniEvent</Link> &copy; Copyright{" "}
 							{new Date().getFullYear()}{" "}
 						</p>
 					</div>
@@ -112,11 +112,11 @@ const register = () => {
 				<div className='register md:w-[40%] h-[100vh] relative'>
 					<div className='absolute bottom-5 right-5'>
 						<a
-							href='https://github.com/dha-stix'
+							href='https://github.com/code-art4'
 							target='_blank'
 							className='text-gray-100'
 						>
-							Built by David Asaolu
+							Built by Ojo Triumph
 						</a>
 					</div>
 				</div>

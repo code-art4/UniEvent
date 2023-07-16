@@ -6,10 +6,10 @@ const RegClosed = ({ event }) => {
 	return (
 		<div>
 			<Head>
-				<title>{`${event.title} | EventTiz`}</title>
+				<title>{`${event.title} | UniEvents`}</title>
 				<meta
 					name='description'
-					content='An event ticketing system built with NextJS and Firebase'
+					content='Unilorin Events system'
 				/>
 				<meta name='viewport' content='width=device-width, initial-scale=1' />
 				<link rel='icon' href='/favicon.ico' />

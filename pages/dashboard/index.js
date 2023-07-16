@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Head from "next/head";
-import AuthNav from "../components/AuthNav";
-import NoEvent from "../components/NoEvent";
-import Events from "../components/Events";
+import AuthNav from "../../components/AuthNav";
+import NoEvent from "../../components/NoEvent";
+import Events from "../../components/Events";
 import { useRouter } from "next/router";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../utils/firebase";
-import { getEvents } from "../utils/util";
-import Loading from "../components/Loading";
+import { auth } from "../../utils/firebase";
+import { getEvents } from "../../utils/util";
+import Loading from "../../components/Loading";
 
 const dashboard = () => {
 	const router = useRouter();

@@ -13,7 +13,7 @@ const Nav = () => {
 					className='text-xl font-bold text-gray-300
             '
 				>
-					EventTiz
+					UniEvent
 				</h1>
 			</Link>
 			<div className='md:flex items-center justify-between hidden space-x-8'>
@@ -23,9 +23,6 @@ const Nav = () => {
 				<Link href='/register' className='text-gray-400 hover:text-white'>
 					Register
 				</Link>
-				<a href='https://github.com/dha-stix' target='_blank'>
-					<BsGithub className='text-gray-400 text-2xl hover:text-[#C07F00]' />
-				</a>
 			</div>
 			<div className='md:hidden block'>
 				<GiHamburgerMenu
@@ -48,14 +45,6 @@ const Nav = () => {
 						<Link href='/register' className='text-white hover:text-[#C07F00]'>
 							Register
 						</Link>
-						<div className='flex items-center space-x-6'>
-							<a href='https://github.com/dha-stix' target='_blank'>
-								<BsGithub className='text-white text-2xl hover:text-[#C07F00]' />
-							</a>
-							<a href='https://twitter.com/dayvid_JS' target='_blank'>
-								<BsTwitter className='text-white text-2xl hover:text-[#C07F00]' />
-							</a>
-						</div>
 					</div>
 				</nav>
 			)}

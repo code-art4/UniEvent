@@ -10,8 +10,8 @@ const ShareEventModal = ({ event, closeModal }) => {
 	const handleCopy = () => setCopied(true);
 	const router = useRouter();
 	const registerUrl = event.data
-		? `https://eventtiz.vercel.app/register/${event.id}/${event.data.slug}`
-		: `https://eventtiz.vercel.app/register/${router.query.id}/${event.slug}`;
+		? `http://localhost:3000/register/${event.id}`
+		: `http://localhost:3000p/register/${router.query.id}`;
 
 	return (
 		<div className='w-full h-[100vh] dim absolute top-0 left-0 flex items-center justify-center p-4  z-40'>

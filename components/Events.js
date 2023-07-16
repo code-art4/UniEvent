@@ -2,17 +2,19 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { BsFillShareFill } from "react-icons/bs";
+import { AiFillEdit } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
-import { convertTo12HourFormat } from "../utils/util";
+import { convertTo12HourFormat, deleteEvent } from "../utils/util";
 import ShareEventModal from "./ShareEventModal";
-import { deleteEvent } from '../utils/util';
+import DeleteAlert from './DeleteAlert'
 
 const Events = ({ events }) => {
 	const router = useRouter();
 	const [showModal, setShowModal] = useState(false);
+	const [activeEvent, setActiveEvent] = useState();
 	const [deleteModal, setDeleteModal] = useState(false)
-	const handleRoute = (slug, id) =>
-		router.push({ pathname: `/events/${id}/${slug}` });
+	const handleRoute = (id) =>
+		router.push({ pathname: `/dashboard/event/${id}` });
 
 	const openModal = () => setShowModal(true);
 	const closeModal = () => setShowModal(false);
@@ -32,7 +34,7 @@ const Events = ({ events }) => {
 					>
 						<div
 							className='p-4 w-full cursor-pointer'
-							onClick={() => handleRoute(event.data.slug, event.id)}
+							onClick={() => handleRoute(event.id)}
 						>
 							<h2 className='text-xl font-medium mb-6'>{event.data.title}</h2>
 							<p className='opacity-80'>
@@ -48,21 +50,35 @@ const Events = ({ events }) => {
 						</div>
 
 						<div className='w-full py-6 bg-[#C07F00] rounded-b-2xl flex items-center px-4 justify-between'>
-							<MdDelete className='text-gray-200 text-2xl cursor-pointer' onClick={()=> deleteEvent(event.id)} />
-							{!event.data.disableRegistration && (
-								<BsFillShareFill
-									className='text-white text-xl cursor-pointer'
-									onClick={openModal}
-								/>
-							)}
+							<MdDelete className='text-gray-200 text-2xl cursor-pointer' onClick={() => {
+								setActiveEvent(event)
+								setDeleteModal(true)
+							}}
+							/>
+							<div className='ml-auto flex items-center gap-x-5'>
+								<AiFillEdit className='text-gray-200 text-2xl cursor-pointer' onClick={() => {
+									router.push({ pathname: `/edit/event/${event.id}` });
+								}} />
+								{!event.data.disableRegistration && (
+									<BsFillShareFill
+										className='text-white text-xl cursor-pointer'
+										onClick={() => {
+											setActiveEvent(event)
+											openModal()
+										}}
+									/>
+								)}
+							</div>
 						</div>
-						{showModal && (
-							<ShareEventModal event={event} closeModal={closeModal} />
-						)}
-						
 					</div>
 				))}
 			</div>
+
+			{showModal && (
+				<ShareEventModal event={activeEvent} closeModal={closeModal} />
+			)}
+
+			{deleteModal && <DeleteAlert event={activeEvent} setClose={setDeleteModal} />}
 		</div>
 	);
 };

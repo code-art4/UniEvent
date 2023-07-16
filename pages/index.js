@@ -8,10 +8,10 @@ export default function Home() {
 	return (
 		<>
 			<Head>
-				<title>EventTiz</title>
+				<title>UniEvent</title>
 				<meta
 					name='description'
-					content='An event ticketing system built with NextJS and Firebase'
+					content='Unilorin Events system'
 				/>
 				<meta name='viewport' content='width=device-width, initial-scale=1' />
 				<link rel='icon' href='/favicon.ico' />
@@ -20,7 +20,7 @@ export default function Home() {
 				<Nav />
 				<Hero />
 				<HomeSection />
-				<Footer />
+				{/* <Footer /> */}
 			</main>
 		</>
 	);

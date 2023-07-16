@@ -4,13 +4,13 @@ import fourfour from "../images/fourfour.svg"
 import Image from 'next/image';
 import Link from 'next/link';
 const ErrorPage = () => {
-  return (
+	return (
 		<div>
 			<Head>
-				<title> 404 | EventTiz</title>
+				<title> 404 | Unilorin Events</title>
 				<meta
 					name='description'
-					content='An event ticketing system built with NextJS and Firebase'
+					content='Unilorin Events system for Unilorin'
 				/>
 				<meta name='viewport' content='width=device-width, initial-scale=1' />
 				<link rel='icon' href='/favicon.ico' />

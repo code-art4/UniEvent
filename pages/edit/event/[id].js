@@ -1,13 +1,17 @@
-import React, { useState, useEffect, useCallback, Fragment } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Head from "next/head";
 import { MdCancel } from "react-icons/md";
 import Link from "next/link";
-import axios from 'axios';
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../utils/firebase";
-import { addEventToFirebase } from "../../utils/util";
+import db, { auth } from "../../../utils/firebase";
+import { addEventToFirebase, createSlug } from "../../../utils/util";
 import { useRouter } from "next/router";
-import Loading from "../../components/Loading";
+import Loading from "../../../components/Loading";
+import {
+	doc,
+	getDoc,
+	updateDoc
+} from "firebase/firestore";
 
 const event = () => {
 	const [user, setUser] = useState({});
@@ -18,11 +22,10 @@ const event = () => {
 	const [venue, setVenue] = useState("");
 	const [description, setDescription] = useState("");
 	const [note, setNote] = useState("");
-	const [attendeesLength, setAttendeesLength] = useState("");
+	const [flier, setFlier] = useState(null);
 	const [accountNum, setAccountNum] = useState();
 	const [bankName, setBankName] = useState("");
-	const [banks, setBanks] = useState([]);
-	const [flier, setFlier] = useState(null);
+	const [event, setEvent] = useState(false);
 	const [buttonClicked, setButtonClicked] = useState(false);
 	const router = useRouter();
 
@@ -36,29 +39,52 @@ const event = () => {
 		});
 	}, []);
 
+	const getEvent = async () => {
+		const eventRef = doc(db, "events", router.query?.id);
+		const eventSnap = await getDoc(eventRef);
+		const event = eventSnap.data();
+		setEvent(event)
+		setUser(event?.user_id)
+		setDate(event?.date)
+		setDescription(event?.description)
+		setNote(event?.note)
+		setPrice(event?.price)
+		setTime(event?.time)
+		setVenue(event?.venue)
+		setTitle(event?.title)
+	}
+
 	useEffect(() => {
 		isUserLoggedIn();
-		fetchBankNames()
 	}, [isUserLoggedIn]);
 
-	const handleSubmit = (e) => {
+	useEffect(() => {
+		router.query?.id ? getEvent() : null
+	}, [router])
+
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setButtonClicked(true);
-		addEventToFirebase(
-			user.uid,
+		const eventDocRef = doc(db, "events", router.query.id);
+		await updateDoc(eventDocRef, {
 			title,
 			date,
 			time,
 			price,
-			attendeesLength,
 			venue,
 			description,
 			note,
-			flier,
-			router,
 			accountNum,
-			bankName
-		);
+			bankName,
+			slug: createSlug(title),
+			attendees: [],
+			disableRegistration: false,
+		}).then(() => {
+			setTimeout(() => setButtonClicked(false), 1000)
+			getEvent();
+		}).catch(e => {
+			console.log(e)
+		});
 	};
 
 	const handleFileReader = (e) => {
@@ -71,39 +97,33 @@ const event = () => {
 		};
 	};
 
-	const publicKey = "pk_test_d031e856e8b2f0a1b45e46ddaad881dacee9747e";
-	const baseURL = 'https://api.paystack.co';
+	const updateEvent = async () => {
+		await addDoc(collection(db, "events"), {
+			user_id: id,
+			title,
+			date,
+			time,
+			venue,
+			description,
+			note,
+			slug: createSlug(title),
+			attendees: [],
+			disableRegistration: false,
+		}).catch(e => {
+			console.log(e)
+		});
 
-	async function fetchBankNames() {
-		try {
-			const apiKey = publicKey;
-			const headers = {
-				Authorization: `Bearer ${apiKey}`
-			};
+	}
 
-			const params = {
-				country: 'nigeria',
-				perPage: 100,
-			};
 
-			const response = await axios.get(`${baseURL}/bank`, { headers, params });
-
-			// Extract bank names from the API response
-			const banks = response.data.data;
-
-			setBanks(banks)
-
-			return banks;
-		} catch (error) {
-			console.error('Error fetching bank names:', error.message);
-			return [];
-		}
+	if (!event) {
+		return <p>Loading...</p>
 	}
 
 	return (
 		<div>
 			<Head>
-				<title>Create New Event | UniEvent</title>
+				<title>Edit {title} | UniEvent</title>
 				<meta
 					name='description'
 					content='Unilorin Events system'
@@ -113,7 +133,7 @@ const event = () => {
 			</Head>
 			<main className='p-6'>
 				<div className='flex items-center justify-between'>
-					<h2 className='text-2xl font-bold mb-6'>Create a new event</h2>
+					<h2 className='text-2xl font-bold mb-6'>Edit {event?.title?.charAt(0)?.toUpperCase() + event?.title?.substr(1)?.toLowerCase()}</h2>
 					<Link href='/dashboard'>
 						<MdCancel className='text-4xl text-[#C07F00] cursor-pointer' />
 					</Link>
@@ -127,7 +147,9 @@ const event = () => {
 						className='border-[1px] py-2 px-4 rounded-md mb-3'
 						required
 						value={title}
-						onChange={(e) => setTitle(e.target.value)}
+						onChange={(e) => {
+							setTitle(e?.target?.value)
+						}}
 					/>
 					<div className='w-full flex justify-between'>
 						<div className='w-1/2 flex flex-col mr-[20px]'>
@@ -161,12 +183,12 @@ const event = () => {
 								type='number'
 								min="0" max="10000" step="1"
 								className='border-[1px] py-2 px-4 rounded-md mb-3'
+								required
 								value={price}
 								onChange={(e) => setPrice(e.target.value)}
 							/>
 						</div>
-					</div>
-
+					</div>											
 					<label htmlFor='venue'>Venue</label>
 					<input
 						name='venue'
@@ -177,31 +199,24 @@ const event = () => {
 						onChange={(e) => setVenue(e.target.value)}
 						placeholder='Plot Address, Lagos, Nigeria'
 					/>
-					{price ? <Fragment><label htmlFor='accountNum'>Account Number</label>
-						<input
-							name='accountNum'
-							type='text'
-							className='border-[1px] py-2 px-4 rounded-md mb-3'
-							required
-							onChange={(e) => setAccountNum(e.target.value)}
-							placeholder='0000000000'
-							maxLength={10}
-						/>
-						<label htmlFor='bankName'>Bank Name</label>
-						<select className='border-[1px] py-2 px-4 rounded-md mb-3'
-							required onChange={(e) => setBankName(e.target.value)}>
-							{banks.map(each => {
-								return <option>{each.name}</option>
-							})}
-						</select> </Fragment> : null}
-					<label htmlFor='expectedAttendees'>Expected Attendees</label>
+					<label htmlFor='accountNum'>Account Number</label>
 					<input
-						name='attendeesLength'
-						type='number'
+						name='accountNum'
+						type='text'
 						className='border-[1px] py-2 px-4 rounded-md mb-3'
 						required
-						value={venue}
-						onChange={(e) => setAttendeesLength(e.target.value)}
+						onChange={(e) => setAccountNum(e.target.value)}
+						placeholder='0000000000'
+						maxLength={10}
+					/>
+					<label htmlFor='bankName'>Bank Name</label>
+					<input
+						name='bankName'
+						type='text'
+						className='border-[1px] py-2 px-4 rounded-md mb-3'
+						required
+						onChange={(e) => setBankName(e.target.value)}
+						placeholder='Bank Name'
 					/>
 					<label htmlFor='description'>
 						Event Description <span className='text-gray-500'>(optional)</span>
@@ -239,7 +254,7 @@ const event = () => {
 						<Loading title='May take longer time for image uploads' />
 					) : (
 						<button className='px-4 py-2 bg-[#C07F00] w-[200px] mt-3 text-white rounded-md'>
-							Create Event
+							Edit Event
 						</button>
 					)}
 				</form>
