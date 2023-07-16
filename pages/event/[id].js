@@ -15,7 +15,7 @@ const ListEvent = ({ firebaseEvent }) => {
     const openModal = () => setShowModal(true);
     const closeModal = () => setShowModal(false);
 
-    const registerUrl = `http://localhost:3000/register/${router.query.id}`;
+    const registerUrl = `https://unievnt.netlify.app/register/${router.query.id}`;
 
     useEffect(() => {
         if (!firebaseEvent.title) {
