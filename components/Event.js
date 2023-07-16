@@ -8,14 +8,13 @@ const Event = ({ item, id }) => {
         onClick={() => Router.push(`/event/${id}`)}
     >
         <div className='w-full h-[16rem] md:mt-auto mt-3 px-10'>
-            <Image
+{item?.flier_url ?            <Image
                 src={item?.flier_url}
                 alt='Create an Account'
                 className='w-full h-full object-contain'
                 width={300}
                 height={300}
-                required
-            />
+            /> : null}
         </div>
         <span className='bg-white/70 text-black absolute top-0 left-0 rounded-r-full px-3 py-2'>#{item?.price}</span>
         <span className='bg-white/70 text-black absolute top-0 right-0 rounded-l-full pl-3 py-2 w-20'>{formatDate(item?.date)} </span>

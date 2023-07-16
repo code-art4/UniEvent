@@ -49,6 +49,11 @@ const HomeSection = () => {
 		};
 	}, [])
 
+	console.log(events)
+
+	if (!events) {
+		return <span>Loading...</span>
+	}
 
 	return (
 		<div className='w-full bg-black  md:px-[20px] px-[10px] py-10 flex justify-center flex-col items-center'>
