@@ -5,7 +5,7 @@
 - when someone registers via your invite (RSVP) link, they receive the event ticket in their email, including a passcode which you can use to verify their event ticket from your dashboard.
 - The application also allows you as a user to view the number of people who registered for your event, validate an attendee's ticket via the passcode they receive, and also disable the registration link when you have enough attendees. You can also delete an event after it has occurred.
 
-<img width="1264" alt="Event ticketing system" src="https://github.com/dha-stix/eventtiz/assets/67129211/c7282244-6b1c-49e0-918e-1bfc1097a26c">
+<img width="1264" alt="Event ticketing system" src="https://github.com/code-art4/eventtiz/assets/67129211/c7282244-6b1c-49e0-918e-1bfc1097a26c">
 
 ## Live Demo
 [View Live Version](https://eventtiz.vercel.app)
