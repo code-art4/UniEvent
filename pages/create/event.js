@@ -47,17 +47,17 @@ const event = () => {
 		addEventToFirebase(
 			user.uid,
 			title,
+			price,
 			date,
 			time,
-			price,
-			attendeesLength,
 			venue,
 			description,
 			note,
 			flier,
-			router,
 			accountNum,
-			bankName
+			bankName,
+			attendeesLength,
+			router,
 		);
 	};
 

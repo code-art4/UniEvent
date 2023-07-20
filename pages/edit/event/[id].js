@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, Fragment } from "react";
+import axios from 'axios';
 import Head from "next/head";
 import { MdCancel } from "react-icons/md";
 import Link from "next/link";
@@ -25,6 +26,7 @@ const event = () => {
 	const [flier, setFlier] = useState(null);
 	const [accountNum, setAccountNum] = useState();
 	const [bankName, setBankName] = useState("");
+	const [banks, setBanks] = useState();
 	const [event, setEvent] = useState(false);
 	const [buttonClicked, setButtonClicked] = useState(false);
 	const router = useRouter();
@@ -52,15 +54,20 @@ const event = () => {
 		setTime(event?.time)
 		setVenue(event?.venue)
 		setTitle(event?.title)
+		setAccountNum(event?.accountNum)
+		setBankName(event?.bankName)
 	}
 
 	useEffect(() => {
 		isUserLoggedIn();
+		fetchBankNames()
 	}, [isUserLoggedIn]);
 
 	useEffect(() => {
 		router.query?.id ? getEvent() : null
 	}, [router])
+
+	console.log(event)
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -81,6 +88,7 @@ const event = () => {
 			disableRegistration: false,
 		}).then(() => {
 			setTimeout(() => setButtonClicked(false), 1000)
+			successMessage("Event successfully edited! 🎉");
 			getEvent();
 		}).catch(e => {
 			console.log(e)
@@ -97,22 +105,51 @@ const event = () => {
 		};
 	};
 
-	const updateEvent = async () => {
-		await addDoc(collection(db, "events"), {
-			user_id: id,
-			title,
-			date,
-			time,
-			venue,
-			description,
-			note,
-			slug: createSlug(title),
-			attendees: [],
-			disableRegistration: false,
-		}).catch(e => {
-			console.log(e)
-		});
+	// const updateEvent = async () => {
+	// 	await addDoc(collection(db, "events"), {
+	// 		user_id: id,
+	// 		title,
+	// 		date,
+	// 		time,
+	// 		venue,
+	// 		description,
+	// 		note,
+	// 		slug: createSlug(title),
+	// 		attendees: [],
+	// 		disableRegistration: false,
+	// 	}).catch(e => {
+	// 		console.log(e)
+	// 	});
 
+	// }
+
+	const publicKey = "pk_test_d031e856e8b2f0a1b45e46ddaad881dacee9747e";
+	const baseURL = 'https://api.paystack.co';
+
+	async function fetchBankNames() {
+		try {
+			const apiKey = publicKey;
+			const headers = {
+				Authorization: `Bearer ${apiKey}`
+			};
+
+			const params = {
+				country: 'nigeria',
+				perPage: 100,
+			};
+
+			const response = await axios.get(`${baseURL}/bank`, { headers, params });
+
+			// Extract bank names from the API response
+			const banks = response.data.data;
+
+			setBanks(banks)
+
+			return banks;
+		} catch (error) {
+			console.error('Error fetching bank names:', error.message);
+			return [];
+		}
 	}
 
 
@@ -188,7 +225,7 @@ const event = () => {
 								onChange={(e) => setPrice(e.target.value)}
 							/>
 						</div>
-					</div>											
+					</div>
 					<label htmlFor='venue'>Venue</label>
 					<input
 						name='venue'
@@ -199,25 +236,24 @@ const event = () => {
 						onChange={(e) => setVenue(e.target.value)}
 						placeholder='Plot Address, Lagos, Nigeria'
 					/>
-					<label htmlFor='accountNum'>Account Number</label>
-					<input
-						name='accountNum'
-						type='text'
-						className='border-[1px] py-2 px-4 rounded-md mb-3'
-						required
-						onChange={(e) => setAccountNum(e.target.value)}
-						placeholder='0000000000'
-						maxLength={10}
-					/>
-					<label htmlFor='bankName'>Bank Name</label>
-					<input
-						name='bankName'
-						type='text'
-						className='border-[1px] py-2 px-4 rounded-md mb-3'
-						required
-						onChange={(e) => setBankName(e.target.value)}
-						placeholder='Bank Name'
-					/>
+					{price ? <Fragment><label htmlFor='accountNum'>Account Number</label>
+						<input
+							name='accountNum'
+							type='text'
+							className='border-[1px] py-2 px-4 rounded-md mb-3'
+							value={accountNum}
+							required
+							onChange={(e) => setAccountNum(e.target.value)}
+							placeholder='0000000000'
+							maxLength={10}
+						/>
+						<label htmlFor='bankName'>Bank Name</label>
+						<select className='border-[1px] py-2 px-4 rounded-md mb-3'
+							required onChange={(e) => setBankName(e.target.value)}>
+							{banks?.map(each => {
+								return <option selected={each.name === bankName}>{each.name}</option>
+							})}
+						</select> </Fragment> : null}
 					<label htmlFor='description'>
 						Event Description <span className='text-gray-500'>(optional)</span>
 					</label>
@@ -259,7 +295,7 @@ const event = () => {
 					)}
 				</form>
 			</main>
-		</div>
+		</div >
 	);
 };
 

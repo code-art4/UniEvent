@@ -35,7 +35,7 @@ const RegisterPage = ({ event }) => {
     const [cardExpiryNum, setCardExpiryNum] = useState("");
     const [cardCVV, setCardCVV] = useState();
     const [cardName, setCardName] = useState("");
-    const { query } = useRouter();
+    const { query } = useRouter();    
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -99,6 +99,8 @@ const RegisterPage = ({ event }) => {
         onClose: () => alert("Wait! You need this oil, don't go!!!!"),
     };
 
+    // console.log(isFormValid, event?.accountNum, event?.bankName)
+
     return (
         <div>
             <Head>
@@ -110,7 +112,7 @@ const RegisterPage = ({ event }) => {
             <main className='w-full flex items-center justify-between min-h-[100vh] relative'>
                 <div className='md:w-[60%] w-full flex flex-col items-center justify-center min-h-[100vh] px-[30px] py-[30px] relative'>
                     <h2 className='text-2xl font-medium mb-3'>Get your ticket 🎉</h2>
-                    <form className='w-full flex flex-col justify-center' onSubmit={event?.accountNumber && event?.bankName ? e => e.preventDefault() : handleSubmit}>
+                    <form className='w-full flex flex-col justify-center' onSubmit={event?.accountNum && event?.bankName ? e => e.preventDefault() : handleSubmit}>
                         <label htmlFor='name'>Full name</label>
                         <div className='w-full relative'>
                             <input
@@ -137,7 +139,7 @@ const RegisterPage = ({ event }) => {
                             <HiMail className=' absolute left-4 top-3 text-gray-300 text-xl' />
                         </div>
 
-                        {isFormValid && (event?.accountNumber && event?.bankName) ? <PaystackButton
+                        {isFormValid && event?.accountNum && event?.bankName ? <PaystackButton
                             className='bg-[#FFD95A] p-3 font-medium hover:bg-[#C07F00] hover:text-[#FFF8DE] mb-3 rounded-md'
                             {...componentProps}
                         /> : <button

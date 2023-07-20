@@ -80,12 +80,16 @@ export const createSlug = (sentence) => {
 export const addEventToFirebase = async (
 	id,
 	title,
+	price,
 	date,
 	time,
 	venue,
 	description,
 	note,
 	flier,
+	accountNum,
+	bankName,
+	attendeesLength,
 	router
 ) => {
 	const docRef = await addDoc(collection(db, "events"), {
@@ -93,6 +97,7 @@ export const addEventToFirebase = async (
 		title,
 		date,
 		time,
+		price,
 		venue,
 		description,
 		note,
@@ -106,7 +111,7 @@ export const addEventToFirebase = async (
 	const imageRef = ref(storage, `events/${docRef.id}/image`);
 
 	if (flier !== null) {
-		await uploadString(imageRef, flier, "data_url").then(async () => {
+		await uploadString(imageRef, flier, 'data_url').then(async () => {
 			//👇🏻 Gets the image URL
 			const downloadURL = await getDownloadURL(imageRef);
 			//👇🏻 Updates the docRef, by adding the logo URL to the document
@@ -208,11 +213,18 @@ export const convertTo12HourFormat = (time) => {
 	const [hours, minutes] = time.split(":").map(Number);
 	const period = hours >= 12 ? "pm" : "am";
 	const hours12 = hours % 12 || 12;
-	const formattedTime = `${hours12.toString().padStart(2, "0")}:${minutes
+
+	// Ensure minutes are within the valid range (0 to 59)
+	const validMinutes = minutes >= 0 && minutes <= 59 ? minutes : 0;
+
+	const formattedTime = `${hours12.toString().padStart(2, "0")}:${validMinutes
 		.toString()
 		.padStart(2, "0")}`;
+
+	console.log(formattedTime)
 	return `${formattedTime}${period}`;
 };
+
 
 export const updateRegLink = async (id) => {
 	const number = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
