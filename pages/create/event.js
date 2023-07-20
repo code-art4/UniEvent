@@ -200,7 +200,7 @@ const event = () => {
 						type='number'
 						className='border-[1px] py-2 px-4 rounded-md mb-3'
 						required
-						value={venue}
+						value={attendeesLength}
 						onChange={(e) => setAttendeesLength(e.target.value)}
 					/>
 					<label htmlFor='description'>
