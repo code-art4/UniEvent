@@ -5,17 +5,21 @@ import { HiMail } from "react-icons/hi";
 import { AiTwotoneLock, AiFillCheckCircle } from "react-icons/ai";
 import { firebaseCreateUser } from "../utils/util";
 import { useRouter } from "next/router";
+import Loading from '../components/Loading';
 
 const register = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [cpassword, setCPassword] = useState("");
+	const [fname, setFname] = useState("");
+	const [lname, setLname] = useState("");
+	const [loading, setLoading] = useState(false);
 	const router = useRouter();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (password === cpassword) {
-			firebaseCreateUser(email, password, router);
+			firebaseCreateUser(fname, lname, email, password, router, setLoading);
 			setEmail("");
 			setPassword("");
 			setCPassword("");
@@ -33,7 +37,7 @@ const register = () => {
 				<meta name='viewport' content='width=device-width, initial-scale=1' />
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
-			<main className='w-full flex items-center justify-between min-h-[100vh]'>
+			{loading ? <Loading title='Registering....' /> : <main className='w-full flex items-center justify-between min-h-[100vh]'>
 				<div className='md:w-[60%] w-full flex flex-col items-center justify-center min-h-[100vh] px-[30px] py-[30px] relative'>
 					<Link href='/'>
 						<h2 className='text-2xl font-medium mb-6'>Create an account</h2>
@@ -42,6 +46,30 @@ const register = () => {
 						className='w-full flex flex-col justify-center'
 						onSubmit={handleSubmit}
 					>
+						<label htmlFor='fname'>First Name</label>
+						<div className='w-full relative'>
+							<input
+								type='text'
+								name='fname'
+								className='border pl-5 pr-10 py-2 mb-3 rounded-md w-full'
+								required
+								value={fname}
+								onChange={(e) => setFname(e.target.value)}
+							/>
+						</div>
+
+						<label htmlFor='lname'>Last Name</label>
+						<div className='w-full relative'>
+							<input
+								type='text'
+								name='lname'
+								className='border pl-5 pr-10 py-2 mb-3 rounded-md w-full'
+								required
+								value={lname}
+								onChange={(e) => setLname(e.target.value)}
+							/>
+						</div>
+
 						<label htmlFor='email'>Email address</label>
 						<div className='w-full relative'>
 							<input
@@ -116,11 +144,11 @@ const register = () => {
 							target='_blank'
 							className='text-gray-100'
 						>
-							Built by Ojo Triumph
+
 						</a>
 					</div>
 				</div>
-			</main>
+			</main>}
 		</div>
 	);
 };

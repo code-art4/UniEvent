@@ -5,17 +5,20 @@ import { HiMail } from "react-icons/hi";
 import { AiTwotoneLock } from "react-icons/ai";
 import { useRouter } from "next/router";
 import { firebaseLoginUser } from "../utils/util";
+import Loading from '../components/Loading';
 
 
 const login = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [loading, setLoading] = useState(false);
 	const router = useRouter();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		firebaseLoginUser(email, password, router);
+		firebaseLoginUser(email, password, router, setLoading);
 	};
+
 	return (
 		<div>
 			<Head>
@@ -27,7 +30,7 @@ const login = () => {
 				<meta name='viewport' content='width=device-width, initial-scale=1' />
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
-			<main className='w-full flex items-center justify-between min-h-[100vh]'>
+			{loading ? <Loading title='Logging in....' /> : <main className='w-full flex items-center justify-between min-h-[100vh]'>
 				<div className='md:w-[60%] w-full flex flex-col items-center justify-center min-h-[100vh] px-[30px] py-[30px] relative'>
 					<Link href='/'>
 						<h2 className='text-2xl font-medium mb-6'>Log into your account</h2>
@@ -88,11 +91,11 @@ const login = () => {
 							target='_blank'
 							className='text-gray-100'
 						>
-							Built by Ojo Triumph
+
 						</a>
 					</div>
 				</div>
-			</main>
+			</main>}
 		</div>
 	);
 };

@@ -58,12 +58,10 @@ const sendEmail = (
 		)
 		.then(
 			(result) => {
-				console.log(result)
 				setLoading(false);
 				setSuccess(true);
 			},
 			(error) => {
-				console.log(error)
 				alert(error.text);
 			}
 		);
@@ -154,30 +152,68 @@ export const errorMessage = (message) => {
 	});
 };
 
-export const firebaseCreateUser = (email, password, router) => {
-	createUserWithEmailAndPassword(auth, email, password)
-		.then((userCredential) => {
-			const user = userCredential.user;
-			successMessage("Account created 🎉");
-			router.push("/login");
-		})
-		.catch((error) => {
-			console.error(error);
-			errorMessage("Account creation declined ❌");
+export const firebaseCreateUser = async (fname, lname, email, password, router, setLoading) => {
+	try {
+		setLoading(true);
+		const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+		await addDoc(collection(db, "users"), {
+			fname,
+			lname,
+			email,
+			password
 		});
+
+		const user = userCredential.user;
+		successMessage("Account created 🎉");
+		router.push("/login");
+	} catch (error) {
+		console.error(error);
+		setLoading(false);
+
+		if (error.code === "auth/invalid-email") {
+			errorMessage("Invalid email format. Please provide a valid email address.");
+		} else if (error.code === "auth/weak-password") {
+			errorMessage("Password should be at least 6 characters long.");
+		} else if (error.code === "auth/email-already-in-use") {
+			errorMessage("The email address is already in use by another account.");
+		} else {
+			errorMessage("Account creation declined ❌");
+		}
+	}
 };
-export const firebaseLoginUser = (email, password, router) => {
+
+export const firebaseLoginUser = (email, password, router, setLoading) => {
+	setLoading(true);
+
 	signInWithEmailAndPassword(auth, email, password)
 		.then((userCredential) => {
 			const user = userCredential.user;
-			successMessage("Authentication successful 🎉");
+			successMessage("Authentication successful 🎉");			
 			router.push("/dashboard");
 		})
 		.catch((error) => {
 			console.error(error);
-			errorMessage("Incorrect Email/Password ❌");
+			setLoading(false);
+
+			// Handle different Firebase authentication errors
+			switch (error.code) {
+				case "auth/invalid-email":
+					errorMessage("Invalid email format. Please provide a valid email address.");
+					break;
+				case "auth/user-disabled":
+					errorMessage("Your account has been disabled. Please contact support.");
+					break;
+				case "auth/user-not-found":
+				case "auth/wrong-password":
+					errorMessage("Incorrect email or password. Please try again.");
+					break;
+				default:
+					errorMessage("Login failed. Please try again later.");
+			}
 		});
 };
+
 
 export const firebaseLogOut = (router) => {
 	signOut(auth)
@@ -221,7 +257,7 @@ export const convertTo12HourFormat = (time) => {
 		.toString()
 		.padStart(2, "0")}`;
 
-	console.log(formattedTime)
+	// console.log(formattedTime)
 	return `${formattedTime}${period}`;
 };
 

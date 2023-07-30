@@ -1,57 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Link from 'next/link';
-import createimage from "../images/createimage.svg";
-import event from "../images/event.svg";
-import share from "../images/share.svg";
-import Image from "next/image";
-import { reduceCharacters } from '../utils/funcs'
-import db from "../utils/firebase";
 import Event from './Event';
-import {
-	getDoc,
-	addDoc,
-	collection,
-	doc,
-	updateDoc,
-	onSnapshot,
-	query,
-	deleteDoc,
-	where,
-	arrayUnion,
-} from "@firebase/firestore";
 
 
-const HomeSection = () => {
-	const [events, setEvents] = useState()
-	const [loading, setLoading] = useState()
-
-	const getEvents = () => {
-		try {
-			const q = query(collection(db, "events"));
-
-			const unsubscribe = onSnapshot(q, (querySnapshot) => {
-				const firebaseEvents = [];
-				querySnapshot.forEach((doc) => {
-					firebaseEvents.push({ data: doc.data(), id: doc.id });
-				});
-				setEvents(firebaseEvents);
-				setLoading(false);
-
-				return () => unsubscribe();
-			});
-		} catch (error) {
-			console.error(error);
-		}
-	};
-
-	useEffect(() => {
-		getEvents();
-	}, [])
-
-	console.log(events)
-
-	if (!events) {
-		return <span>Loading...</span>
+const HomeSection = ({ events }) => {
+	if (events.length < 1) {
+		return <p>No current events</p>
 	}
 
 	return (
@@ -63,11 +17,8 @@ const HomeSection = () => {
 				))}
 			</div>
 			<Link href="/events" className='bg-[#FFD95A] px-6 py-4 rounded-lg mb-4 mt-8'>
-				See more
+				View All Events
 			</Link>
-			{/* <button className='bg-[#FFD95A] px-6 py-4 rounded-lg mb-4 mt-8'>
-				
-			</button> */}
 		</div>
 	);
 };

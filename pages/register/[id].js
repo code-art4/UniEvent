@@ -35,7 +35,7 @@ const RegisterPage = ({ event }) => {
     const [cardExpiryNum, setCardExpiryNum] = useState("");
     const [cardCVV, setCardCVV] = useState();
     const [cardName, setCardName] = useState("");
-    const { query } = useRouter();    
+    const { query } = useRouter();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -163,7 +163,7 @@ const RegisterPage = ({ event }) => {
                             target='_blank'
                             className='text-gray-100'
                         >
-                            Built by Ojo Triumph
+
                         </a>
                     </div>
                 </div>

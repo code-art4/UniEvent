@@ -3,7 +3,8 @@ import Link from "next/link";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { MdCancel } from "react-icons/md";
 import { FaUserAlt } from "react-icons/fa";
-import { useRouter } from "next/router";
+import { CgProfile } from "react-icons/cg";
+import { useRouter, useNavigate } from "next/router";
 import { firebaseLogOut } from "../utils/util";
 
 const AuthNav = ({ user }) => {
@@ -23,10 +24,7 @@ const AuthNav = ({ user }) => {
 				</h1>
 			</Link>
 			<div className='md:flex hidden items-center justify-between'>
-				<p className='mr-4 text-gray-400 hover:text-black'>
-					{user["email"]?.substring(0, 6)}
-				</p>
-
+				<CgProfile className='w-6 h-6 text-black/70 cursor-pointer mr-5' onClick={() => router.push('/profile')} />
 				<button
 					className='mr-4 text-[#9E6F21] text-medium hover:text-black'
 					onClick={signOut}
