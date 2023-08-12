@@ -30,6 +30,7 @@ const dashboard = () => {
 		isUserLoggedIn();
 	}, [isUserLoggedIn]);
 
+
 	if (loading) return <Loading title='Your dashboard is almost ready.🍚' />;
 
 	return (

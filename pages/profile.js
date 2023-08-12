@@ -22,6 +22,7 @@ import {
 } from "@firebase/storage";
 import { onAuthStateChanged, updateProfile } from 'firebase/auth';
 import { useRouter } from 'next/navigation'
+import Loading from '../components/Loading'
 
 const Profile = () => {
     const router = useRouter()
@@ -38,7 +39,7 @@ const Profile = () => {
 
     const [user, setUser] = useState({});
     const [events, setEvents] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     const isUserLoggedIn = useCallback(() => {
         onAuthStateChanged(auth, async (user) => {
@@ -131,26 +132,25 @@ const Profile = () => {
 
     const handleEditProfile = async () => {
         const userRef = doc(db, "users", userDetails.id);
+        setLoading(true)
 
         try {
             // Save user details to Firestore under "users" collection with the document ID as the user's email
-
-
             await updateDoc(userRef, {
                 fname: userDetails.firstName,
                 lname: userDetails.lastName
             });
 
-            // If there is an image, upload it and update the "image" field in the document
-            if (typeof userDetails.profileImage !== 'string' && userDetails?.profileImage) {
-                const imageRef = ref(storage, `users/${userRef.id}/profileImage`);
+            const imageRef = ref(storage, `users/${userRef.id}/profileImage`);
 
-                await uploadString(imageRef, userDetails.profileImage, "data_url");
-                const downloadURL = await getDownloadURL(imageRef);
-                await updateDoc(userRef, {
-                    profileImage: downloadURL,
-                });
-            }
+            await uploadString(imageRef, userDetails.profileImage, "data_url");
+            const downloadURL = await getDownloadURL(imageRef);
+            updateProfile(auth.currentUser, {
+                photoURL: downloadURL
+            })
+            await updateDoc(userRef, {
+                profileImage: downloadURL,
+            });
 
             if (userDetails.password) {
                 await updateDoc(userRef, {
@@ -180,16 +180,22 @@ const Profile = () => {
                 });
             }
 
+            setLoading(false)
             successMessage("Profile successfully edited");
-            router.push("/dashboard");
+            // router.push("/dashboard");
         } catch (error) {
             console.error("Error saving profile:", error);
             errorMessage("Failed to save profile ❌");
+            setLoading(false)
         }
     };
 
     if (!userDetails.email) {
-        return <p>Loading...</p>
+        return <Loading title='Fetching user information' />
+    }
+
+    if(loading){
+        return <Loading title='Saving editted user info' />
     }
 
 

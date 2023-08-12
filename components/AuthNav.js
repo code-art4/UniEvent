@@ -11,9 +11,9 @@ import { auth } from '../utils/firebase';
 const AuthNav = ({ user }) => {
 	const [hamburger, setHamburger] = useState(false);
 	const router = useRouter();
-	console.log(auth)
 
 	const signOut = () => firebaseLogOut(router);
+	console.log(auth.currentUser.photoURL)
 
 	return (
 		<div className='h-[10vh] flex items-center justify-between px-[20px] sticky top-0 border-b-[1px] bg-white z-40'>
@@ -26,7 +26,7 @@ const AuthNav = ({ user }) => {
 				</h1>
 			</Link>
 			<div className='md:flex hidden items-center justify-between'>
-				<CgProfile className='w-6 h-6 text-black/70 cursor-pointer mr-5' onClick={() => router.push('/profile')} />
+				{!auth.currentUser.photoURL ? <CgProfile className='w-6 h-6 text-black/70 cursor-pointer mr-5' onClick={() => router.push('/profile')} /> : <img src={auth.currentUser.photoURL} alt="Profile" className="w-8 h-8 rounded-full object-cover mr-5 cursor-pointer" onClick={() => router.push('/profile')} />}															
 				<button
 					className='mr-4 text-[#9E6F21] text-medium hover:text-black'
 					onClick={signOut}
@@ -50,7 +50,7 @@ const AuthNav = ({ user }) => {
 					</div>
 					<div className='flex w-full flex-col space-y-8'>
 						<div className='flex items-center space-x-3 text-white hover:text-[#C07F00]'>
-							<FaUserAlt />
+							{!auth?.photoUrl ? <FaUserAlt onClick={() => router.push('/profile')} /> : <img src={userDetails.profileImage} alt="Profile" className="w-[2rem] h-[2rem] rounded-full object-cover" />}							
 							<p>{user["email"]?.substring(0, 6)}</p>
 						</div>
 						<Link
