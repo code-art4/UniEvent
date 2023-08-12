@@ -20,7 +20,7 @@ import {
     uploadString,
     deleteObject,
 } from "@firebase/storage";
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, updateProfile } from 'firebase/auth';
 import { useRouter } from 'next/navigation'
 
 const Profile = () => {
@@ -155,6 +155,16 @@ const Profile = () => {
             if (userDetails.password) {
                 await updateDoc(userRef, {
                     password: userDetails.password
+                }).then(data => {
+                    updateProfile(auth.currentUser, {
+                        password: userDetails.password
+                    }).then(() => {
+                        // Profile updated!
+                        // ...
+                    }).catch((error) => {
+                        // An error occurred
+                        // ...
+                    });
                 });
             }
 
@@ -171,7 +181,7 @@ const Profile = () => {
             }
 
             successMessage("Profile successfully edited");
-            // router.push("/dashboard");
+            router.push("/dashboard");
         } catch (error) {
             console.error("Error saving profile:", error);
             errorMessage("Failed to save profile ❌");

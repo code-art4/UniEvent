@@ -6,10 +6,12 @@ import { FaUserAlt } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { useRouter, useNavigate } from "next/router";
 import { firebaseLogOut } from "../utils/util";
+import { auth } from '../utils/firebase';
 
 const AuthNav = ({ user }) => {
 	const [hamburger, setHamburger] = useState(false);
 	const router = useRouter();
+	console.log(auth)
 
 	const signOut = () => firebaseLogOut(router);
 

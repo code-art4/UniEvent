@@ -5,11 +5,11 @@ import Event from './Event';
 
 const HomeSection = ({ events }) => {
 	if (events.length < 1) {
-		return <p>No current events</p>
+		return <div className='w-full bg-black/70 md:px-[20px] px-[10px] mt-10 py-10 flex justify-center flex-col items-center'><p className='text-white'>No current events</p></div>
 	}
 
 	return (
-		<div className='w-full bg-black  md:px-[20px] px-[10px] py-10 flex justify-center flex-col items-center'>
+		<div className='w-full bg-black md:px-[20px] px-[10px] py-10 flex justify-center flex-col items-center'>
 			<h2 className='text-2xl text-[#ecbf66] mb-12'>Popular Events</h2>
 			<div className='grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-x-6 gap-y-24 w-full py-4 md:px-[50px] px-[10px] mb-12'>
 				{events?.map((item) => (
