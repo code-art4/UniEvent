@@ -189,7 +189,7 @@ export const firebaseLoginUser = (email, password, router, setLoading) => {
 	signInWithEmailAndPassword(auth, email, password)
 		.then((userCredential) => {
 			const user = userCredential.user;
-			successMessage("Authentication successful 🎉");			
+			// successMessage("Authentication successful 🎉");			
 			router.push("/dashboard");
 		})
 		.catch((error) => {
