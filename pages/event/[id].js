@@ -53,6 +53,7 @@ const ListEvent = ({ firebaseEvent }) => {
                     className="h-[30vh] p-3 flex flex-col items-center justify-center bg-[#FFD95A] registergray w-full bg-cover"
                     style={{
                         background: flier_url ? `url(${flier_url})` : "black",
+                        backgroundSize: "contain",
                     }}
                 >
                     <h2 className="text-4xl font-extrabold mb-4 text-center text-white">{title}</h2>

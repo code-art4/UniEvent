@@ -289,7 +289,7 @@ export const registerAttendee = async (
 		const result = attendees.filter((item) => item.email === email);
 		if (result.length === 0 && firebaseEvent.disableRegistration === false) {
 			await updateDoc(eventRef, {
-				reattendees: arrayUnion({
+				attendees: arrayUnion({
 					name,
 					email,
 					passcode,

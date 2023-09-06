@@ -96,7 +96,7 @@ const RegisterPage = ({ event }) => {
             handleSubmit();
             // alert("Thanks for doing business with us! Come back soon!!");            
         },
-        onClose: () => alert("Wait! You need this oil, don't go!!!!"),
+        onClose: () => alert("Wait! Do you want to proceed with not registering?"),
     };
 
     // console.log(isFormValid, event?.accountNum, event?.bankName)

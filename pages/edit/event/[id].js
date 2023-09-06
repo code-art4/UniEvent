@@ -5,7 +5,7 @@ import { MdCancel } from "react-icons/md";
 import Link from "next/link";
 import { onAuthStateChanged } from "firebase/auth";
 import db, { auth } from "../../../utils/firebase";
-import { addEventToFirebase, createSlug } from "../../../utils/util";
+import { addEventToFirebase, createSlug, successMessage } from "../../../utils/util";
 import { useRouter } from "next/router";
 import Loading from "../../../components/Loading";
 import {
@@ -83,6 +83,7 @@ const event = () => {
 			note,
 			accountNum,
 			bankName,
+			flier_url: flier,
 			slug: createSlug(title),
 			attendees: [],
 			disableRegistration: false,
@@ -249,7 +250,8 @@ const event = () => {
 						/>
 						<label htmlFor='bankName'>Bank Name</label>
 						<select className='border-[1px] py-2 px-4 rounded-md mb-3'
-							required onChange={(e) => setBankName(e.target.value)}>
+							required
+							onChange={(e) => setBankName(e.target.value)}>
 							{banks?.map(each => {
 								return <option selected={each.name === bankName}>{each.name}</option>
 							})}
