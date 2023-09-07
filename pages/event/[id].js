@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
+import Image from 'next/image'
 import Head from "next/head";
-import { BsFillShareFill } from "react-icons/bs";
+import { BsFillCalendarFill, BsFillShareFill } from "react-icons/bs";
 import { useRouter } from "next/router";
 import { doc, getDoc } from "@firebase/firestore";
 import db from "../../utils/firebase";
+import { ampmDate } from "../../utils/funcs";
 import ShareEventModal from "../../components/ShareEventModal";
 import ErrorPage from "../../components/ErrorPage";
+import Nav from './../../components/Nav';
 
 const ListEvent = ({ firebaseEvent }) => {
     const [isRegistrationEnabled, setIsRegistrationEnabled] = useState(firebaseEvent.disableRegistration);
@@ -23,11 +26,11 @@ const ListEvent = ({ firebaseEvent }) => {
         }
     }, [firebaseEvent.title, router]);
 
-    const renderRegistrationButton = () => {
+    const RegistrationButton = () => {
         if (!isRegistrationEnabled) {
             return (
                 <button
-                    className="bg-[#FFD95A] text-white py-2 px-4 rounded-lg mt-6 mx-auto block"
+                    className="border border-[#C07F00] text-[#C07F00] py-2 px-4 rounded-lg mt-6 mx-auto block hover:bg-[#C07F00] hover:border-[none] hover:text-white w-full"
                     onClick={() => router.push(registerUrl)}
                 >
                     Register
@@ -38,7 +41,19 @@ const ListEvent = ({ firebaseEvent }) => {
         }
     };
 
-    const { title, flier_url, attendees, description, date, time, note } = firebaseEvent;
+    const { title, flier_url, attendees, description, date, time, note, subtitle } = firebaseEvent;
+
+    const eventDate = new Date(date); // Replace with your date variable
+    const dayOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const months = [
+        "January", "February", "March", "April", "May", "June", "July",
+        "August", "September", "October", "November", "December"
+    ];
+
+    const dayName = dayOfWeek[eventDate.getDay()];
+    const monthName = months[eventDate.getMonth()];
+    const dayOfMonth = eventDate.getDate();
+
 
     return (
         <div>
@@ -48,53 +63,65 @@ const ListEvent = ({ firebaseEvent }) => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main className="relative w-full container mx-auto">
-                <div
-                    className="h-[30vh] p-3 flex flex-col items-center justify-center bg-[#FFD95A] registergray w-full bg-cover"
-                    style={{
-                        background: flier_url ? `url(${flier_url})` : "black",
-                        backgroundSize: "contain",
-                    }}
-                >
-                    <h2 className="text-4xl font-extrabold mb-4 text-center text-white">{title}</h2>
-                    {attendees && attendees.length > 0 && (
-                        <p className="text-xl font-extrabold mb-6 text-white">
-                            Total Attendees: <span className="text-white">{attendees.length}</span>
-                        </p>
-                    )}
-                </div>
 
-                <div className="px-4 py-6 text-center">
-                    <div className="mb-6">
-                        <h3 className="text-2xl font-semibold">Description:</h3>
-                        <p>{description}</p>
-                    </div>
-                    <div className="mb-6">
-                        <h3 className="text-2xl font-semibold">Attendees Number:</h3>
-                        <p>{attendees?.length}</p>
-                    </div>
-                    <div className="mb-6">
-                        <h3 className="text-2xl font-semibold">Time of Event:</h3>
-                        <p>
-                            {date}, {time}
+            <main className="relative w-full mx-auto">
+                <div className="w-full h-max bg-[#e1d1b3]/30 home">
+                    <Nav />
+                </div>
+                <Image src={flier_url} width={300} height={300} className="h-[50vh] flex flex-col items-center justify-center bg-[#FFD95A] registergray w-[70%] mx-auto bg-cover mt-7 rounded-xl" />
+                <div className="px-4 py-6 flex items-start w-[70%] mx-auto mt-3 gap-x-12">
+                    <div className='w-[65%] flex flex-col gap-y-7'>
+                        <p className='text-lg font-medium text-black/60'>
+                            <span>{date ? `${dayName}, ${monthName} ${dayOfMonth}` : null}</span>
                         </p>
-                    </div>
-                    {note && (
-                        <div className="mb-6">
-                            <h3 className="text-2xl font-semibold">Note:</h3>
-                            <p className="">{note}</p>
+                        <div>
+                            <h2 className='text-3xl font-semibold text-[#C07F00] mb-2'>
+                                {title}
+                            </h2>
+                            <p className='text-black/60 font-medium mt-3'>{subtitle}</p>
                         </div>
-                    )}
+
+                        <div>
+                            <p className='text-xl text-[#C07F00] font-medium'>Date and time</p>
+                            <p className='text-black/60 font-medium mt-1 flex items'> <span className='flex items-center'><BsFillCalendarFill className='w-4 h-4 mr-4' />{date ? `${dayName}, ${monthName} ${dayOfMonth}` : null}</span>
+                                <span>  · {ampmDate(time)} WAT</span>   </p>
+                        </div>
+
+                        <div>
+                            <p className='text-xl text-[#C07F00] font-medium'>Location</p>
+                            <p className='text-black/60 font-medium mt-1'> </p>
+                        </div>
+
+                        <div>
+                            <p className='text-xl text-[#C07F00] font-medium'>About this event</p>
+                            <p className='text-black/60 font-medium mt-1'>{description}</p>
+                        </div>
+
+                        {note && (
+                            <div>
+                                <p className='text-xl text-[#C07F00] font-medium'>Note</p>
+                                <p className='text-black/60 font-medium mt-1'>{note}</p>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className='flex flex-col items-end w-[35%] rounded-xl px-8 py-4 mt-6'>                        
+                             {!isRegistrationEnabled && (
+                    <BsFillShareFill
+                        className="cursor-pointer text-lg text-black/60 mr-2"
+                        onClick={openModal}
+                    />
+                )}
+                        <RegistrationButton />
+                    </div>
                 </div>
 
-                {renderRegistrationButton()}
-
-                {!isRegistrationEnabled && (
+                {/* {!isRegistrationEnabled && (
                     <BsFillShareFill
                         className="absolute top-6 right-10 cursor-pointer text-2xl text-[#FFD95A]"
                         onClick={openModal}
                     />
-                )}
+                )} */}
 
                 {showModal && <ShareEventModal event={firebaseEvent} closeModal={closeModal} />}
             </main>

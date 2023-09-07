@@ -110,8 +110,6 @@ const Events = () => {
                         ))
                 }
             }
-
-            return <p>No events matches the search input</p>
         } else {
             const freeEvents = events?.filter(item => {
                 return (eventParams.free && item?.data?.price <= 0);
