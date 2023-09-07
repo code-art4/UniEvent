@@ -67,9 +67,9 @@ export default function Home() {
 			<main className='h-[100vh] home'>
 				<Nav />
 				<Hero />
-				<section id="about" class="text-center mt-16 mb-4 flex items-center justify-between w-[75%] mx-auto py-20">
+				<section id="about" class="text-center mt-4 md:mt-16 mb-4 flex flex-col lg:flex-row gap-y-8 items-center justify-between w-[90%] lg:w-[75%] mx-auto py-20">
 					<Image src={AboutSVG} width={500} height={500} />
-					<div className='w-[40%]'>
+					<div className='w-[80%] md:w-[40%]'>
 						<h2 className="text-3xl font-bold mb-4 text-[#C07F00]">About us</h2>
 						<p className="px-4 m-auto text-[17px] leading-8">Unilorin Events Management: Your gateway to diverse campus events - from academics to culture. Explore, engage, and thrive together!</p>
 					</div>

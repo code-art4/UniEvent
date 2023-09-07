@@ -68,14 +68,18 @@ const ListEvent = ({ firebaseEvent }) => {
                 <div className="w-full h-max bg-[#e1d1b3]/30 home">
                     <Nav />
                 </div>
-                <Image src={flier_url} width={300} height={300} className="h-[50vh] flex flex-col items-center justify-center bg-[#FFD95A] registergray w-[70%] mx-auto bg-cover mt-7 rounded-xl" />
-                <div className="px-4 py-6 flex items-start w-[70%] mx-auto mt-3 gap-x-12">
-                    <div className='w-[65%] flex flex-col gap-y-7'>
+
+
+
+                <div className='w-[90%] lg:w-[65%] mx-auto'>
+                     <Image src={flier_url} width={300} height={300} className="h-[30vh] md:h-[45vh] flex flex-row md:flex-col items-center justify-center bg-[#FFD95A] registergray w-full bg-cover mt-7 rounded-xl" />
+                <div className="px-1 md:px-4 py-2 md:py-6 flex flex-col lg:flex-row items-start mx-auto lg:mt-3 gap-x-12">
+                    <div className='px-4 flex flex-col gap-y-4 lg:gap-y-7'>
                         <p className='text-lg font-medium text-black/60'>
-                            <span>{date ? `${dayName}, ${monthName} ${dayOfMonth}` : null}</span>
+                            <span>{date ? `${dayName}, ${monthName} ${dayOfMonth} ` : null}</span>
                         </p>
                         <div>
-                            <h2 className='text-3xl font-semibold text-[#C07F00] mb-2'>
+                            <h2 className='text-3xl font-semibold text-[#C07F00] lg:mb-2'>
                                 {title}
                             </h2>
                             <p className='text-black/60 font-medium mt-3'>{subtitle}</p>
@@ -105,25 +109,20 @@ const ListEvent = ({ firebaseEvent }) => {
                         )}
                     </div>
 
-                    <div className='flex flex-col items-end w-[35%] rounded-xl px-8 py-4 mt-6'>                        
+                    <div className='flex flex-col items-end w-full lg:w-[35%] rounded-xl px-8 py-4 mt-6'>                        
                              {!isRegistrationEnabled && (
                     <BsFillShareFill
-                        className="cursor-pointer text-lg text-black/60 mr-2"
+                        className="cursor-pointer hidden lg:block text-lg text-black/60 mr-2"
                         onClick={openModal}
                     />
                 )}
                         <RegistrationButton />
                     </div>
                 </div>
-
-                {/* {!isRegistrationEnabled && (
-                    <BsFillShareFill
-                        className="absolute top-6 right-10 cursor-pointer text-2xl text-[#FFD95A]"
-                        onClick={openModal}
-                    />
-                )} */}
+               
 
                 {showModal && <ShareEventModal event={firebaseEvent} closeModal={closeModal} />}
+                    </div>               
             </main>
         </div>
     );
