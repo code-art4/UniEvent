@@ -17,7 +17,10 @@ const Nav = () => {
 				</h1>
 			</Link>
 			<div className='md:flex items-center justify-between hidden space-x-8'>
-				<Link href='/login' className=' text-gray-400 hover:text-white'>
+				<Link href='/events' className='text-gray-400 hover:text-white'>
+					All events
+				</Link>
+				<Link href='/login' className='text-gray-400 hover:text-white'>
 					Login
 				</Link>
 				<Link href='/register' className='text-gray-400 hover:text-white'>

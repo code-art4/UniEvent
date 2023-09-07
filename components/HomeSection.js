@@ -9,14 +9,15 @@ const HomeSection = ({ events }) => {
 	}
 
 	return (
-		<div className='w-full md:px-[20px] px-[10px] py-10 flex justify-center flex-col items-center'>
-			<h2 className='text-2xl text-[#ecbf66] mb-12'>Popular Events</h2>
-			<div className='grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-x-6 gap-y-24 w-full py-4 md:px-[50px] px-[10px] mb-12'>
+		<div className='w-[80%] mx-auto md:px-[20px] px-[10px] py-20 flex justify-center flex-col items-center'>
+			<h2 className="text-3xl font-bold mb-2 text-[#C07F00]">Upcoming events</h2>		
+			<h3 className="text-xl font-medium mb-12 text-[#C07F00]/80">Unveiling Unilorin's Upcoming Events: Get Ready for Excitement!</h3>	
+			<div className='grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-x-6 gap-y-24 w-full py-4 md:px-[50px] px-[10px] mb-12'>
 				{events?.map((item) => (
-					<Event key={item.id} item={item.data} id={item.id} />
+					<Event key={item.id} item={item?.data} id={item.id} />
 				))}
 			</div>
-			{events?.data ? <Link href="/events" className='bg-[#FFD95A] px-6 py-4 rounded-lg mb-4 mt-8'>
+			{events?.length > 12 ? <Link href="/events" className='bg-[#FFD95A] px-6 py-4 rounded-lg mb-4 mt-8'>
 				View All Events
 			</Link> : null}
 		</div>
