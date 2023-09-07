@@ -74,7 +74,9 @@ export default function Home() {
 						<p className="px-4 m-auto text-[17px] leading-8">Unilorin Events Management: Your gateway to diverse campus events - from academics to culture. Explore, engage, and thrive together!</p>
 					</div>
 				</section>
-				<HomeSection loading={loading} events={events} />
+				<HomeSection loading={loading} events={events?.filter(event =>
+  event?.disableRegistration === true || event?.attendees?.length === event?.expectedAttendees?.length
+)} />
 				<footer class="text-center py-4">
 					<p class="text-gray-600">&copy; 2023 Unilorin Events Management. All rights reserved.</p>
 				</footer>
