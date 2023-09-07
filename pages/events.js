@@ -157,17 +157,17 @@ const Events = () => {
                 </div>
 
                 <h2 className="text-3xl text-center font-bold mt-20 mb-5 text-[#C07F00]">All Unilorin Events</h2>
-                <div className="w-[40%] mx-auto flex items-center gap-x-3 mt-3 mb-5 border border-[#C07F00] rounded-full overflow-hidden">
+                <div className="w-[80%] md:w-[40%] mx-auto flex items-center gap-x-3 mt-3 mb-5 border border-[#C07F00] rounded-full overflow-hidden">
                     <input
                         type="search"
-                        className="w-full py-2 outline-none px-4 rounded"
+                        className="w-full py-1.5 md:py-2 outline-none px-4 rounded"
                         onChange={filterEvent}
                     />
                     <AiOutlineSearch className="text-[#C07F00] h-6 w-6 mr-4" />
                 </div>
 
 
-                <div className="w-[80%] mx-auto mt-12">
+                <div className="w-[80%] mx-auto mt-7 py-5 pr-6 md:bg-black/[2%]">
                     <div className='flex flex-col'>
                         <div className='md:mt-8 mt-2 flex lg:mt-0 lg:flex-shrink-0'>
                             <div className='ml-auto flex mt-1 bg-[#C07F00]/90 rounded-xl border border-secondary_sky_light w-[max-content] p-[.1rem]'>
