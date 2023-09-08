@@ -287,6 +287,7 @@ export const registerAttendee = async (
 		firebaseEvent = eventSnap.data();
 		const attendees = firebaseEvent.attendees;
 		const result = attendees.filter((item) => item.email !== email);
+
 		if (result.length === 0 && firebaseEvent.disableRegistration === false) {
 			await updateDoc(eventRef, {
 				attendees: arrayUnion({
@@ -294,23 +295,32 @@ export const registerAttendee = async (
 					email,
 					passcode,
 				}),
-			});
-			const flierURL = firebaseEvent.flier_url
-				? firebaseEvent.flier_url
-				: "No flier for this event";
-			sendEmail(
-				name,
-				email,
-				firebaseEvent.title,
-				firebaseEvent.time,
-				firebaseEvent.date,
-				firebaseEvent.note,
-				firebaseEvent.description,
-				passcode,
-				flierURL,
-				setSuccess,
-				setLoading
-			);
+			})
+				.then(() => {
+					const flierURL = firebaseEvent.flier_url
+						? firebaseEvent.flier_url
+						: "No flier for this event";
+
+					// Call sendEmail only if the updateDoc operation is successful
+					sendEmail(
+						name,
+						email,
+						firebaseEvent.title,
+						firebaseEvent.time,
+						firebaseEvent.date,
+						firebaseEvent.note,
+						firebaseEvent.description,
+						passcode,
+						flierURL,
+						setSuccess,
+						setLoading
+					);
+				})
+				.catch((error) => {
+					// Handle any errors that occur during the updateDoc operation
+					console.error("Error updating document: ", error);
+				});
+
 		} else {
 			setLoading(false);
 			errorMessage("User already registered ❌");
