@@ -93,6 +93,7 @@ const RegisterPage = ({ event }) => {
         disabledRegistration: isFormValid ? false : true,
         text: "GET TICKET",
         onSuccess: () => {
+            console.log('here')
             handleSubmit();
             // alert("Thanks for doing business with us! Come back soon!!");            
         },

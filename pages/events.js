@@ -92,7 +92,7 @@ const Events = () => {
                     return <p className='text-center mt-32'>No events matches the search input</p>
                 } else {
                     return freeEvents?.filter(event =>
-  event?.disableRegistration === true || event?.attendees?.length === event?.expectedAttendees?.length).slice(0, displayCount)
+                        event?.disableRegistration === true || event?.attendees?.length === event?.expectedAttendees?.length).slice(0, displayCount)
                         .map(item => (
                             <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-x-6 gap-y-24 py-4 md:px-[50px] px-[10px] mb-12 mt-5">
                                 <Event key={item.id} item={item?.data} id={item?.id} />
@@ -104,7 +104,7 @@ const Events = () => {
                     return <p className='text-center mt-32'>No events matches the search input</p>
                 } else {
                     return paidEvents?.filter(event =>
-  event?.disableRegistration === true || event?.attendees?.length === event?.expectedAttendees?.length)?.slice(0, displayCount)
+                        event?.disableRegistration === true || event?.attendees?.length === event?.expectedAttendees?.length)?.slice(0, displayCount)
                         .map(item => (
                             <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-x-6 gap-y-24 py-4 md:px-[50px] px-[10px] mb-12 mt-5">
                                 <Event key={item.id} item={item?.data} id={item?.id} />
@@ -123,11 +123,11 @@ const Events = () => {
 
             if (eventParams.free) {
                 if (freeEvents.length <= 0) {
-                    return <p className='text-center mt-32'>Free events does not exist right now</p>
+                    return <p className='text-center mt-24'>Free events does not exist right now</p>
                 }
 
                 return freeEvents?.filter(event =>
-  event?.disableRegistration === true || event?.attendees?.length === event?.expectedAttendees?.length)?.slice(0, displayCount)
+                    event?.disableRegistration === true || event?.attendees?.length === event?.expectedAttendees?.length)?.slice(0, displayCount)
                     .map(item => (
                         <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-x-6 gap-y-24 py-4 md:px-[50px] px-[10px] mb-12 mt-5">
                             <Event key={item.id} item={item?.data} id={item?.id} />
@@ -138,7 +138,7 @@ const Events = () => {
                     return <p className='text-center mt-32'>Paid events does not exist right now</p>
                 } else {
                     return paidEvents?.filter(event =>
-  event?.disableRegistration === true || event?.attendees?.length === event?.expectedAttendees?.length)?.slice(0, displayCount)
+                        event?.disableRegistration === true || event?.attendees?.length === event?.expectedAttendees?.length)?.slice(0, displayCount)
                         .map(item => (
                             <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-x-6 gap-y-24 py-4 md:px-[50px] px-[10px] mb-12 mt-5">
                                 <Event key={item.id} item={item?.data} id={item?.id} />
@@ -155,7 +155,7 @@ const Events = () => {
                 <title>All Events</title>
             </Head>
 
-            <main className="min-h-[100vh] pb-10">
+            <main className="pb-10">
                 <div className="w-full h-max bg-[#e1d1b3]/30 home">
                     <Nav />
                 </div>
@@ -171,39 +171,41 @@ const Events = () => {
                 </div>
 
 
-                <div className="w-[80%] mx-auto mt-7 py-5 pr-6 md:bg-black/[2%]">
-                    <div className='flex flex-col'>
-                        <div className='md:mt-8 mt-2 flex lg:mt-0 lg:flex-shrink-0'>
-                            <div className='ml-auto flex mt-1 bg-[#C07F00]/90 rounded-xl border border-secondary_sky_light w-[max-content] p-[.1rem]'>
-                                <button
-                                    className={`${eventParams.free ? 'bg-white text-secondary_ink_light rounded-l-xl h-[2.4rem] w-[8rem] ml-[1px] rounded-r-xl m-auto hover:white' : 'bg-secondary_sky_light text-white h-[2.4rem] w-[8rem] ml-[1px] rounded-xl m-auto hover:bg-white hover:text-[#C07F00]'} `}
-                                    onClick={() => setEventParams({ free: true, paid: false })}
-                                >
-                                    Free
-                                </button>
-                                <button
-                                    className={`${eventParams.paid ? 'bg-white text-secondary_ink_light rounded-l-xl h-[2.4rem] w-[8rem] ml-[1px] rounded-r-xl m-auto hover:white' : 'bg-secondary_sky_light text-white h-[2.4rem] w-[8rem] ml-[1px] rounded-xl m-auto hover:bg-white hover:text-[#C07F00]'} `}
-                                    onClick={() => setEventParams({ free: false, paid: true })}
-                                >
-                                    Paid
-                                </button>
+                <div className='w-full md:bg-black/[8%]'>
+                    <div className="w-[80%] mx-auto mt-7 py-5 pr-6">
+                        <div className='flex flex-col'>
+                            <div className='md:mt-8 mt-2 flex lg:mt-0 lg:flex-shrink-0'>
+                                <div className='ml-auto flex mt-1 bg-[#C07F00]/90 rounded-xl border border-secondary_sky_light w-[max-content] p-[.1rem]'>
+                                    <button
+                                        className={`${eventParams.free ? 'bg-white text-secondary_ink_light rounded-l-xl h-[2.4rem] w-[8rem] ml-[1px] rounded-r-xl m-auto hover:white' : 'bg-secondary_sky_light text-white h-[2.4rem] w-[8rem] ml-[1px] rounded-xl m-auto hover:bg-white hover:text-[#C07F00]'} `}
+                                        onClick={() => setEventParams({ free: true, paid: false })}
+                                    >
+                                        Free
+                                    </button>
+                                    <button
+                                        className={`${eventParams.paid ? 'bg-white text-secondary_ink_light rounded-l-xl h-[2.4rem] w-[8rem] ml-[1px] rounded-r-xl m-auto hover:white' : 'bg-secondary_sky_light text-white h-[2.4rem] w-[8rem] ml-[1px] rounded-xl m-auto hover:bg-white hover:text-[#C07F00]'} `}
+                                        onClick={() => setEventParams({ free: false, paid: true })}
+                                    >
+                                        Paid
+                                    </button>
+                                </div>
                             </div>
                         </div>
+
+
+                        <Events />
+
+                        {filteredEvents && filteredEvents.length > displayCount && (
+                            <div className="w-full flex justify-center">
+                                <button
+                                    className="bg-[#FFD95A] px-6 py-4 rounded-lg mb-4 mt-8 mx-auto"
+                                    onClick={handleShowMore}
+                                >
+                                    See more
+                                </button>
+                            </div>
+                        )}
                     </div>
-
-
-                    <Events />
-
-                    {filteredEvents && filteredEvents.length > displayCount && (
-                        <div className="w-full flex justify-center">
-                            <button
-                                className="bg-[#FFD95A] px-6 py-4 rounded-lg mb-4 mt-8 mx-auto"
-                                onClick={handleShowMore}
-                            >
-                                See more
-                            </button>
-                        </div>
-                    )}
                 </div>
 
             </main>
