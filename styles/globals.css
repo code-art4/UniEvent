@@ -34,7 +34,6 @@
 	background-size: cover;
 	background-position: center;
 	background-blend-mode: multiply;
-	filter: grayscale(100%);
 }
 .login {
 	background-image: url("../images/heroimage.jpg");

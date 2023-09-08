@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { FaUserAlt } from "react-icons/fa";
@@ -12,22 +12,10 @@ import ErrorPage from "../../components/ErrorPage";
 import Loading from "../../components/Loading";
 import { PaystackButton } from 'react-paystack'
 
-export async function getServerSideProps(context) {
-    const docRef = doc(db, "events", context.query.id);
-    const docSnap = await getDoc(docRef);
-    let firebaseEvent = {};
-    if (docSnap.exists()) {
-        firebaseEvent = docSnap.data();
-    } else {
-        console.log("No such document!");
-    }
-    return {
-        props: { event: firebaseEvent },
-    };
-}
-
-const RegisterPage = ({ event }) => {
+const RegisterPage = () => {
     const [success, setSuccess] = useState(false);
+    const [event, setEvent] = useState({});
+    const [loadingEvent, setLoadingEvent] = useState(true);
     const [loading, setLoading] = useState(false);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -41,14 +29,76 @@ const RegisterPage = ({ event }) => {
         e.preventDefault();
         try {
             registerAttendee(name, email, query.id, setSuccess, setLoading);
+            setEmail('')
+            setName('')
         } catch (e) {
             console.log(e)
         }
         // setEmail("");
         // setName("");
-    };
+    };    
+
+
+    const emailAndNameExists = email && name
+
+    useEffect(() => {
+        const fetchData = async () => {
+    try {
+      const docRef = doc(db, "events", query.id);
+      const docSnap = await getDoc(docRef);
+      let firebaseEvent = {};
+      if (docSnap.exists()) {
+        firebaseEvent = docSnap.data();
+      } else {
+        console.log("No such document!");
+      }
+      setEvent(firebaseEvent);
+      setLoadingEvent(false)
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    //   setLoadingEvent(false)
+    }    
+  };
+
+  // Call fetchData when the component mounts or when emailAndNameExists changes
+  fetchData()} ,[query.id, emailAndNameExists])
+
+    const EventButton = () => {        
+        const attendees = event.attendees;
+        const result = attendees.filter((item) => item.email === email);
+        if (result.length === 0) {
+            if (isFormValid && event?.accountNum && event?.bankName) {
+                return <PaystackButton
+                    className='bg-[#FFD95A] p-3 font-medium hover:bg-[#C07F00] hover:text-[#FFF8DE] mb-3 rounded-md'
+                    {...componentProps}
+                />
+            }else{
+                 return <button
+                type='submit'
+                className='bg-[#FFD95A] p-3 font-medium hover:bg-[#C07F00] hover:text-[#FFF8DE] mb-3 rounded-md'
+                onClick={handleSubmit}
+            >
+                GET TICKET
+            </button>
+            }           
+        }
+
+
+        return <button
+                type='submit'
+                className='bg-[#FFD95A] p-3 font-medium hover:bg-[#C07F00] hover:text-[#FFF8DE] mb-3 rounded-md'
+                onClick={handleSubmit}
+            >
+                GET TICKET
+            </button>
+    }
+
 
     const isFormValid = email !== "" && name !== "";
+
+    if(loadingEvent){
+        return <Loading title='Loading event' />;
+    }
 
     if (loading) {
         return <Loading title='Generating your ticket🤞🏼' />;
@@ -77,13 +127,14 @@ const RegisterPage = ({ event }) => {
     }
 
     const publicKey = "pk_test_d031e856e8b2f0a1b45e46ddaad881dacee9747e";
-    const amount = 10000;
+    const amount = event?.price + '00';
+    console.log(amount)
 
     const componentProps = {
         email,
-        amount,
+        amount: Number(amount) + (Number(amount) * (15/100)),
         currency: "NGN",
-        channels: ['card'],
+        channels: ['card', 'bank', 'ussd', 'mobile_money', 'bank_transfer'],
         metadata: {
             accountNumber: event?.accountNumber,
             bankName: event?.bankName
@@ -91,16 +142,18 @@ const RegisterPage = ({ event }) => {
         },
         publicKey,
         disabledRegistration: isFormValid ? false : true,
-        text: "GET TICKET",
+        text: "GET TICKET",        
         onSuccess: () => {
-            console.log('here')
-            handleSubmit();
-            // alert("Thanks for doing business with us! Come back soon!!");            
+              try {
+            registerAttendee(name, email, query.id, setSuccess, setLoading);
+ setEmail('');
+            setName('');
+        } catch (e) {
+            console.log(e)
+        }
         },
         onClose: () => alert("Wait! Do you want to proceed with not registering?"),
     };
-
-    // console.log(isFormValid, event?.accountNum, event?.bankName)
 
     return (
         <div>
@@ -113,7 +166,10 @@ const RegisterPage = ({ event }) => {
             <main className='w-full flex items-center justify-between min-h-[100vh] relative'>
                 <div className='md:w-[60%] w-full flex flex-col items-center justify-center min-h-[100vh] px-[30px] py-[30px] relative'>
                     <h2 className='text-2xl font-medium mb-3'>Get your ticket 🎉</h2>
-                    <form className='w-full flex flex-col justify-center' onSubmit={event?.accountNum && event?.bankName ? e => e.preventDefault() : handleSubmit}>
+                    <form className='w-full flex flex-col justify-center'
+                        // onSubmit={event?.accountNum && event?.bankName ? e => e.preventDefault() : handleSubmit} 
+                        onSubmit={e => e.preventDefault()}
+                    >
                         <label htmlFor='name'>Full name</label>
                         <div className='w-full relative'>
                             <input
@@ -140,7 +196,8 @@ const RegisterPage = ({ event }) => {
                             <HiMail className=' absolute left-4 top-3 text-gray-300 text-xl' />
                         </div>
 
-                        {isFormValid && event?.accountNum && event?.bankName ? <PaystackButton
+<EventButton/>
+                        {/* {isFormValid && event?.accountNum && event?.bankName ? <PaystackButton
                             className='bg-[#FFD95A] p-3 font-medium hover:bg-[#C07F00] hover:text-[#FFF8DE] mb-3 rounded-md'
                             {...componentProps}
                         /> : <button
@@ -148,7 +205,14 @@ const RegisterPage = ({ event }) => {
                             className='bg-[#FFD95A] p-3 font-medium hover:bg-[#C07F00] hover:text-[#FFF8DE] mb-3 rounded-md'
                         >
                             GET TICKET
-                        </button>}
+                        </button>} */}
+
+                        {/* <button
+                            type='submit'
+                            className='bg-[#FFD95A] p-3 font-medium hover:bg-[#C07F00] hover:text-[#FFF8DE] mb-3 rounded-md'
+                        >
+                            GET TICKET
+                        </button> */}
                     </form>
                     <div className='absolute bottom-5 left-5'>
                         <p className='opacity-50 text-sm'>
