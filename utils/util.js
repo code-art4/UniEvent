@@ -15,6 +15,7 @@ import emailjs from "@emailjs/browser";
 
 import {
 	getDoc,
+	getDocs,
 	addDoc,
 	collection,
 	doc,
@@ -88,9 +89,22 @@ export const addEventToFirebase = async (
 	accountNum,
 	bankName,
 	attendeesLength,
-	router
+	router,
+	setButtonClicked
 ) => {
-	const docRef = await addDoc(collection(db, "events"), {
+	// Check if there is an event with a similar title
+	const eventsCollection = collection(db, "events");
+	const querySnapshot = await getDocs(query(eventsCollection, where("title", "==", title)));
+
+	if (!querySnapshot.empty) {
+		// If a similar title exists, show an error message and don't save
+		errorMessage("Event title already exists. Please choose a different title.");
+		setButtonClicked(false);
+		return;
+	}
+
+	// If there is no similar title, proceed to save the event
+	const docRef = await addDoc(eventsCollection, {
 		user_id: id,
 		title,
 		date,
@@ -102,30 +116,30 @@ export const addEventToFirebase = async (
 		slug: createSlug(title),
 		attendees: [],
 		disableRegistration: false,
-	}).catch(e => {
-		console.log(e)
+	}).catch((e) => {
+		console.log(e);
 	});
 
 	const imageRef = ref(storage, `events/${docRef.id}/image`);
 
 	if (flier !== null) {
-		await uploadString(imageRef, flier, 'data_url').then(async () => {
-			//👇🏻 Gets the image URL
+		await uploadString(imageRef, flier, "data_url").then(async () => {
 			const downloadURL = await getDownloadURL(imageRef);
-			//👇🏻 Updates the docRef, by adding the logo URL to the document
 			await updateDoc(doc(db, "events", docRef.id), {
 				flier_url: downloadURL,
 			});
 
-			//Alerts the user that the process was successful
 			successMessage("Event created! 🎉");
+			setButtonClicked(false);
 			router.push("/dashboard");
 		});
 	} else {
 		successMessage("Event created! 🎉");
+		setButtonClicked(false);
 		router.push("/dashboard");
 	}
 };
+
 
 export const successMessage = (message) => {
 	toast.success(message, {

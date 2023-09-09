@@ -22,7 +22,7 @@ const Events = ({ events }) => {
 	return (
 		<div className='w-full flex flex-col items-center py-[60px] px-[20px]'>
 			<Link href='/create/event'>
-				<button className='bg-[#FFD95A] border-[1px] px-6 py-4 rounded-lg mb-4'>
+				<button className='px-4 py-3 border border-transparent bg-[#C07F00] mt-3 text-white rounded-md hover:border hover:border-[#C07F00] hover:bg-white hover:text-[#C07F00] mb-4'>
 					Create an event ticket
 				</button>
 			</Link>
