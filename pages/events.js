@@ -91,25 +91,27 @@ const Events = () => {
                 if (freeEvents?.length <= 0) {
                     return <p className='text-center mt-32'>No events matches the search input</p>
                 } else {
-                    return freeEvents?.filter(event =>
-                        event?.disableRegistration === true || event?.attendees?.length === event?.expectedAttendees?.length).slice(0, displayCount)
-                        .map(item => (
-                            <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-x-6 gap-y-24 py-4 md:px-[50px] px-[10px] mb-12 mt-5">
+                    return <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-x-6 gap-y-24 py-4 md:px-[50px] px-[10px] mb-12 mt-5">
+                        {freeEvents?.filter(event =>
+                            event?.disableRegistration === true || event?.attendees?.length === event?.expectedAttendees?.length).slice(0, displayCount)
+                            .map(item => (
+
                                 <Event key={item.id} item={item?.data} id={item?.id} />
-                            </div>
-                        ))
+
+                            ))}
+                    </div>
                 }
             } else {
                 if (paidEvents?.length <= 0) {
                     return <p className='text-center mt-32'>No events matches the search input</p>
                 } else {
-                    return paidEvents?.filter(event =>
+                    return <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-x-6 gap-y-24 py-4 md:px-[50px] px-[10px] mb-12 mt-5">{paidEvents?.filter(event =>
                         event?.disableRegistration === true || event?.attendees?.length === event?.expectedAttendees?.length)?.slice(0, displayCount)
                         .map(item => (
-                            <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-x-6 gap-y-24 py-4 md:px-[50px] px-[10px] mb-12 mt-5">
-                                <Event key={item.id} item={item?.data} id={item?.id} />
-                            </div>
-                        ))
+
+                            <Event key={item.id} item={item?.data} id={item?.id} />
+                        ))}
+                    </div>
                 }
             }
         } else {
@@ -126,24 +128,26 @@ const Events = () => {
                     return <p className='text-center mt-24'>Free events does not exist right now</p>
                 }
 
-                return freeEvents?.filter(event =>
+                return <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-x-6 gap-y-24 py-4 md:px-[50px] px-[10px] mb-12 mt-5">
+                    {freeEvents?.filter(event =>
                     event?.disableRegistration === true || event?.attendees?.length === event?.expectedAttendees?.length)?.slice(0, displayCount)
                     .map(item => (
-                        <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-x-6 gap-y-24 py-4 md:px-[50px] px-[10px] mb-12 mt-5">
-                            <Event key={item.id} item={item?.data} id={item?.id} />
-                        </div>
-                    ))
+                        
+                            <Event key={item.id} item={item?.data} id={item?.id} />                        
+                    ))}
+                    </div>
             } else {
                 if (eventParams.paid && paidEvents.length <= 0) {
                     return <p className='text-center mt-32'>Paid events does not exist right now</p>
                 } else {
-                    return paidEvents?.filter(event =>
+                    return <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-x-6 gap-y-24 py-4 md:px-[50px] px-[10px] mb-12 mt-5">
+                        {paidEvents?.filter(event =>
                         event?.disableRegistration === true || event?.attendees?.length === event?.expectedAttendees?.length)?.slice(0, displayCount)
                         .map(item => (
-                            <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-x-6 gap-y-24 py-4 md:px-[50px] px-[10px] mb-12 mt-5">
-                                <Event key={item.id} item={item?.data} id={item?.id} />
-                            </div>
-                        ))
+                            
+                                <Event key={item.id} item={item?.data} id={item?.id} />                            
+                        ))}
+                    </div>
                 }
             }
         }
