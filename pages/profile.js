@@ -130,6 +130,7 @@ const Profile = () => {
         }
     };
 
+
     const handleEditProfile = async () => {
         const userRef = doc(db, "users", userDetails.id);
         setLoading(true)
@@ -141,7 +142,10 @@ const Profile = () => {
                 lname: userDetails.lastName
             });
 
-            if (typeof userDetails?.profileImage !== 'string') {
+            const urlRegex = /(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+
+            // Use the test method of the regex pattern to check if the string contains a link
+            if (!urlRegex.test(userDetails.profileImage)) {
                 const imageRef = ref(storage, `users/${userRef.id}/profileImage`);
 
                 await uploadString(imageRef, userDetails.profileImage, "data_url");
@@ -152,7 +156,6 @@ const Profile = () => {
                 await updateDoc(userRef, {
                     profileImage: downloadURL,
                 });
-
             }
 
             if (userDetails.password) {
