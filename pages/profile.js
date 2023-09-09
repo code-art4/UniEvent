@@ -141,16 +141,19 @@ const Profile = () => {
                 lname: userDetails.lastName
             });
 
-            const imageRef = ref(storage, `users/${userRef.id}/profileImage`);
+            if (typeof userDetails?.profileImage !== 'string') {
+                const imageRef = ref(storage, `users/${userRef.id}/profileImage`);
 
-            await uploadString(imageRef, userDetails.profileImage, "data_url");
-            const downloadURL = await getDownloadURL(imageRef);
-            updateProfile(auth.currentUser, {
-                photoURL: downloadURL
-            })
-            await updateDoc(userRef, {
-                profileImage: downloadURL,
-            });
+                await uploadString(imageRef, userDetails.profileImage, "data_url");
+                const downloadURL = await getDownloadURL(imageRef);
+                updateProfile(auth.currentUser, {
+                    photoURL: downloadURL
+                })
+                await updateDoc(userRef, {
+                    profileImage: downloadURL,
+                });
+
+            }
 
             if (userDetails.password) {
                 await updateDoc(userRef, {
@@ -194,7 +197,7 @@ const Profile = () => {
         return <Loading title='Fetching user information' />
     }
 
-    if(loading){
+    if (loading) {
         return <Loading title='Saving editted user info' />
     }
 
