@@ -71,7 +71,7 @@ const ListEvent = ({ firebaseEvent }) => {
 
 
 
-                <div className='w-[90%] lg:w-[65%] mx-auto'>
+                <div className='w-[90%] lg:w-[50%] mx-auto'>
                      <Image src={flier_url} width={300} height={300} className="h-[30vh] md:h-[45vh] flex flex-row md:flex-col items-center justify-center bg-[#FFD95A] registergray w-full bg-cover mt-7 rounded-xl" />
                 <div className="px-1 md:px-4 py-2 md:py-6 flex flex-col lg:flex-row items-start mx-auto lg:mt-3 gap-x-12">
                     <div className='px-4 flex flex-col gap-y-4 lg:gap-y-7'>

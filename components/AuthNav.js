@@ -13,7 +13,6 @@ const AuthNav = ({ user }) => {
 	const router = useRouter();
 
 	const signOut = () => firebaseLogOut(router);
-	console.log(auth.currentUser.photoURL)
 
 	return (
 		<div className='h-[10vh] flex items-center justify-between px-[20px] sticky top-0 border-b-[1px] bg-white z-40'>
@@ -26,7 +25,7 @@ const AuthNav = ({ user }) => {
 				</h1>
 			</Link>
 			<div className='md:flex hidden items-center justify-between'>
-				{!auth.currentUser.photoURL ? <CgProfile className='w-6 h-6 text-black/70 cursor-pointer mr-5' onClick={() => router.push('/profile')} /> : <img src={auth.currentUser.photoURL} alt="Profile" className="w-8 h-8 rounded-full object-cover mr-5 cursor-pointer" onClick={() => router.push('/profile')} />}															
+				{!auth?.currentUser?.photoURL ? <CgProfile className='w-6 h-6 text-black/70 cursor-pointer mr-5' onClick={() => router.push('/profile')} /> : <img src={auth?.currentUser?.photoURL} alt="Profile" className="w-8 h-8 rounded-full object-cover mr-5 cursor-pointer" onClick={() => router.push('/profile')} />}															
 				<button
 					className='mr-4 text-[#9E6F21] text-medium hover:text-black'
 					onClick={signOut}

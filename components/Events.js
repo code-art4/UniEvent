@@ -46,7 +46,7 @@ const Events = ({ events }) => {
 								Time: {convertTo12HourFormat(event.data.time)}
 							</p>
 							<p className='opacity-50'>Date: {event.data.date}</p>
-							<p className='opacity-50'>Venue: {event.data.venue}</p>
+							<p className='opacity-50'>Location: {event.data?.location}</p>
 						</div>
 
 						<div className='w-full py-6 bg-[#C07F00] rounded-b-2xl flex items-center px-4 justify-between'>

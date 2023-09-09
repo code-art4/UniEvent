@@ -188,7 +188,7 @@ const event = () => {
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 			<AuthNav user={user} />
-			<main className='p-6 w-[50%] mx-auto'>
+			<main className='p-6 w-[90%] md:w-[70%] lg:w-[50%] mx-auto'>
 				<div className='flex items-center justify-between'>
 					<h2 className='text-2xl font-bold mb-6'>Event Details</h2>
 					{/* <Link href='/dashboard'>
@@ -220,8 +220,8 @@ const event = () => {
 							setSubtitle(e?.target?.value)
 						}}
 					/>
-					<div className='w-full flex justify-between'>
-						<div className='w-1/2 flex flex-col mr-[20px]'>
+					<div className='w-full flex flex-col lg:flex-row justify-between'>
+						<div className='w-full lg:w-1/2 flex flex-col mr-[20px]'>
 							<label htmlFor='date'>Date</label>
 							<input
 								name='date'
@@ -232,7 +232,7 @@ const event = () => {
 								onChange={(e) => setDate(e.target.value)}
 							/>
 						</div>
-						<div className='w-1/2 flex flex-col'>
+						<div className='w-full lg:w-1/2 flex flex-col'>
 							<label htmlFor='time'>Time</label>
 							<input
 								name='time'
@@ -244,8 +244,8 @@ const event = () => {
 							/>
 						</div>
 					</div>
-					<div className='w-full flex justify-between'>
-						<div className='w-1/2 flex flex-col mr-[20px]'>
+					<div className='w-full flex flex-col lg:flex-row justify-between'>
+						<div className='w-full md:w-1/2 flex flex-col mr-[20px]'>
 							<label htmlFor='price'>Price</label>
 							<input
 								name='price'
@@ -258,7 +258,7 @@ const event = () => {
 							/>
 						</div>
 
-						<div className='w-1/2 flex flex-col'>
+						<div className='w-full md:w-1/2 flex flex-col'>
 							<label htmlFor='location'>Location</label>
 					<input
 						name='location'
