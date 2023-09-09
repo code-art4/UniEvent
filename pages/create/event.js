@@ -55,6 +55,7 @@ const CreateEvent = () => {
 		addEventToFirebase(
 			user.uid,
 			title,
+			subtitle,
 			price,
 			date,
 			time,
@@ -268,7 +269,7 @@ const CreateEvent = () => {
 
 					<div>
 						<label htmlFor="flier" className="block font-medium text-gray-700 mb-2">
-							Event Flier <span className="text-gray-500">(optional)</span>
+							Event Flier
 						</label>
 						<div className="relative">
 							<input

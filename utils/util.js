@@ -79,6 +79,7 @@ export const createSlug = (sentence) => {
 export const addEventToFirebase = async (
 	id,
 	title,
+	subtitle,
 	price,
 	date,
 	time,

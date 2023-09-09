@@ -80,16 +80,38 @@ const event = () => {
 		e.preventDefault();
 		setButtonClicked(true);
 		const eventDocRef = doc(db, "events", router.query.id);
-		await updateDoc(eventDocRef, {
+
+		if(price > 0){
+			await updateDoc(eventDocRef, {
+				title,
+				date,
+				time,
+				price,
+				location,
+				description,
+				note,
+				accountNum,
+				bankName,
+				flier_url: flier,
+				slug: createSlug(title),
+				attendees: [],
+				disableRegistration: false,
+			}).then(() => {
+				setTimeout(() => setButtonClicked(false), 1000)
+				successMessage("Event successfully edited! 🎉");
+				getEvent();
+			}).catch(e => {
+				console.log(e)
+			});
+		}else{
+			await updateDoc(eventDocRef, {
 			title,
 			date,
 			time,
 			price,
 			location,
 			description,
-			note,
-			accountNum,
-			bankName,
+			note,			
 			flier_url: flier,
 			slug: createSlug(title),
 			attendees: [],
@@ -101,6 +123,8 @@ const event = () => {
 		}).catch(e => {
 			console.log(e)
 		});
+		}
+		
 	};
 
 	const handleFileReader = (e) => {
@@ -325,7 +349,7 @@ const event = () => {
 
 					<div>
 						<label htmlFor="flier" className="block font-medium text-gray-700 mb-2">
-							Event Flier <span className="text-gray-500">(optional)</span>
+							Event Flier
 						</label>
 						<div className="relative">
 							<input
