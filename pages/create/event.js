@@ -322,7 +322,7 @@ const CreateEvent = () => {
 						{buttonClicked ? (
 							<Loading title='May take longer time for image uploads' />
 						) : (
-							<button className='px-4 py-2 bg-[#C07F00] w-[200px] mt-3 text-white rounded-md hover:border hover:border-[#C07F00] hover:bg-white hover:text-[#C07F00] border border-transparent' onClick={handleSubmit}>
+							<button className='px-4 py-2 bg-[#C07F00] w-[200px] mt-3 text-white rounded-md hover:border hover:border-[#C07F00] hover:bg-white hover:text-[#C07F00] border border-transparent' onClick={handleSubmit} disabled={!title || !subtitle || !date || !time || !location || !flier}>
 								Create Event
 							</button>
 						)}
@@ -352,7 +352,7 @@ const CreateEvent = () => {
 
 						<div>
 							<p className='text-xl text-[#C07F00] font-medium'>Location</p>
-							<p className='text-black/60 font-medium mt-1'> </p>
+							<p className='text-black/60 font-medium mt-1'>{location}</p>
 						</div>
 
 						<div>
