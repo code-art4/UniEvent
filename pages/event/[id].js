@@ -72,57 +72,57 @@ const ListEvent = ({ firebaseEvent }) => {
 
 
                 <div className='w-[90%] lg:w-[50%] mx-auto'>
-                     <Image src={flier_url} width={300} height={300} className="h-[30vh] md:h-[45vh] flex flex-row md:flex-col items-center justify-center bg-[#FFD95A] w-full bg-cover mt-7 rounded-xl" />
-                <div className="px-1 md:px-4 py-2 md:py-6 flex flex-col lg:flex-row items-start mx-auto lg:mt-3 gap-x-12">
-                    <div className='px-4 flex flex-col gap-y-4 lg:gap-y-7'>
-                        <p className='text-lg font-medium text-black/60'>
-                            <span>{date ? `${dayName}, ${monthName} ${dayOfMonth} ` : null}</span>
-                        </p>
-                        <div>
-                            <h2 className='text-3xl font-semibold text-[#C07F00] lg:mb-2'>
-                                {title}
-                            </h2>
-                            <p className='text-black/60 font-medium mt-3'>{subtitle}</p>
-                        </div>
-
-                        <div>
-                            <p className='text-xl text-[#C07F00] font-medium'>Date and time</p>
-                            <p className='text-black/60 font-medium mt-1 flex items'> <span className='flex items-center'><BsFillCalendarFill className='w-4 h-4 mr-4' />{date ? `${dayName}, ${monthName} ${dayOfMonth}` : null}</span>
-                                <span>  · {ampmDate(time)} WAT</span>   </p>
-                        </div>
-
-                        <div>
-                            <p className='text-xl text-[#C07F00] font-medium'>Location</p>
-                            <p className='text-black/60 font-medium mt-1'> </p>
-                        </div>
-
-                        <div>
-                            <p className='text-xl text-[#C07F00] font-medium'>About this event</p>
-                            <p className='text-black/60 font-medium mt-1'>{description}</p>
-                        </div>
-
-                        {note && (
+                    <Image src={flier_url} width={300} height={300} className="h-[30vh] md:h-[45vh] flex flex-row md:flex-col items-center justify-center bg-[#FFD95A] w-full bg-cover mt-7 rounded-xl" />
+                    <div className="px-1 md:px-4 py-2 md:py-6 flex flex-col lg:flex-row items-start mx-auto lg:mt-3 gap-x-12 mb-8">
+                        <div className='px-4 flex flex-col gap-y-4 lg:gap-y-7'>
+                            <p className='text-lg font-medium text-black/60'>
+                                <span>{date ? `${dayName}, ${monthName} ${dayOfMonth} ` : null}</span>
+                            </p>
                             <div>
-                                <p className='text-xl text-[#C07F00] font-medium'>Note</p>
-                                <p className='text-black/60 font-medium mt-1'>{note}</p>
+                                <h2 className='text-3xl font-semibold text-[#C07F00] lg:mb-2'>
+                                    {title}
+                                </h2>
+                                <p className='text-black/60 font-medium mt-3'>{subtitle}</p>
                             </div>
-                        )}
+
+                            <div>
+                                <p className='text-xl text-[#C07F00] font-medium'>Date and time</p>
+                                <p className='text-black/60 font-medium mt-1 flex items'> <span className='flex items-center'><BsFillCalendarFill className='w-4 h-4 mr-4' />{date ? `${dayName}, ${monthName} ${dayOfMonth}` : null}</span>
+                                    <span>  · {ampmDate(time)} WAT</span>   </p>
+                            </div>
+
+                            <div>
+                                <p className='text-xl text-[#C07F00] font-medium'>Location</p>
+                                <p className='text-black/60 font-medium mt-1'> </p>
+                            </div>
+
+                            <div>
+                                <p className='text-xl text-[#C07F00] font-medium'>About this event</p>
+                                <p className='text-black/60 font-medium mt-1'>{description}</p>
+                            </div>
+
+                            {note && (
+                                <div>
+                                    <p className='text-xl text-[#C07F00] font-medium'>Note</p>
+                                    <p className='text-black/60 font-medium mt-1'>{note}</p>
+                                </div>
+                            )}
+                        </div>
+
+                        <div className='flex flex-col items-end w-full lg:w-[35%] rounded-xl px-8 py-4 mt-6'>
+                            {!isRegistrationEnabled && (
+                                <BsFillShareFill
+                                    className="cursor-pointer hidden lg:block text-lg text-black/60 mr-2"
+                                    onClick={openModal}
+                                />
+                            )}
+                            <RegistrationButton />
+                        </div>
                     </div>
 
-                    <div className='flex flex-col items-end w-full lg:w-[35%] rounded-xl px-8 py-4 mt-6'>                        
-                             {!isRegistrationEnabled && (
-                    <BsFillShareFill
-                        className="cursor-pointer hidden lg:block text-lg text-black/60 mr-2"
-                        onClick={openModal}
-                    />
-                )}
-                        <RegistrationButton />
-                    </div>
+
+                    {showModal && <ShareEventModal event={firebaseEvent} closeModal={closeModal} />}
                 </div>
-               
-
-                {showModal && <ShareEventModal event={firebaseEvent} closeModal={closeModal} />}
-                    </div>               
             </main>
         </div>
     );
