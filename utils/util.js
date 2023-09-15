@@ -299,9 +299,9 @@ export const registerAttendee = async (
 	if (eventSnap.exists()) {
 		firebaseEvent = eventSnap.data();
 		const attendees = firebaseEvent?.attendees;
-		const result = attendees?.filter((item) => item.email === email);
+		const result = attendees?.filter((item) => item.email === email);		
 
-		if (result === undefined && firebaseEvent.disableRegistration === false) {
+		if (result !== undefined && firebaseEvent.disableRegistration === false) {
 			await updateDoc(eventRef, {
 				attendees: arrayUnion({
 					name,
