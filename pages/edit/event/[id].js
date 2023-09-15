@@ -81,7 +81,7 @@ const event = () => {
 		setButtonClicked(true);
 		const eventDocRef = doc(db, "events", router.query?.id);
 
-		if(price > 0){
+		if (price > 0) {
 			await updateDoc(eventDocRef, {
 				title,
 				date,
@@ -89,7 +89,7 @@ const event = () => {
 				price,
 				location,
 				description,
-				note,				
+				note,
 				flier_url: flier,
 				slug: createSlug(title),
 				attendees: [],
@@ -101,28 +101,28 @@ const event = () => {
 			}).catch(e => {
 				console.log(e)
 			});
-		}else{
+		} else {
 			await updateDoc(eventDocRef, {
-			title,
-			date,
-			time,
-			price,
-			location,
-			description,
-			note,			
-			flier_url: flier,
-			slug: createSlug(title),
-			attendees: [],
-			disableRegistration: false,
-		}).then(() => {
-			setTimeout(() => setButtonClicked(false), 1000)
-			successMessage("Event successfully edited! 🎉");
-			getEvent();
-		}).catch(e => {
-			console.log(e)
-		});
+				title,
+				date,
+				time,
+				price,
+				location,
+				description,
+				note,
+				flier_url: flier,
+				slug: createSlug(title),
+				attendees: [],
+				disableRegistration: false,
+			}).then(() => {
+				setTimeout(() => setButtonClicked(false), 1000)
+				successMessage("Event successfully edited! 🎉");
+				getEvent();
+			}).catch(e => {
+				console.log(e)
+			});
 		}
-		
+
 	};
 
 	const handleFileReader = (e) => {
@@ -356,7 +356,6 @@ const event = () => {
 								name="flier"
 								className="sr-only"
 								accept="image/*"
-								required={true}
 								onChange={handleFileReader}
 							/>
 							<label
