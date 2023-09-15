@@ -127,8 +127,8 @@ const event = () => {
 
 	const handleFileReader = (e) => {
 		const reader = new FileReader();
-		if (e.target.files[0]) {
-			reader.readAsDataURL(e.target.files[0]);
+		if (e.target.files[e.target?.files?.length - 1]) {
+			reader.readAsDataURL(e.target.files[e.target?.files?.length - 1]);
 		}
 		reader.onload = (readerEvent) => {
 			setFlier(readerEvent.target.result);
