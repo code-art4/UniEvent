@@ -138,7 +138,7 @@ const Events = () => {
                     </div>
             } else {
                 if (eventParams.paid && paidEvents.length <= 0) {
-                    return <p className='text-center mt-32'>Paid events does not exist right now</p>
+                    return <p className='text-center mt-24'>Paid events does not exist right now</p>
                 } else {
                     return <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-x-6 gap-y-24 py-4 md:px-[50px] px-[10px] mb-12 mt-5">
                         {paidEvents?.filter(event =>
@@ -160,7 +160,7 @@ const Events = () => {
             </Head>
 
             <main className="pb-10">
-                <div className="w-full h-max bg-[#e1d1b3]/30 home">
+                <div className="w-full h-max bg-[#C07F00]/70 home">
                     <Nav />
                 </div>
 

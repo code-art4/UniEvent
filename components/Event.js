@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { formatDate, reduceCharacters, ampmDate } from '../utils/funcs'
-import {CiUser} from 'react-icons/ci'
+import { CiUser } from 'react-icons/ci'
 import Router from 'next/router'
 
 const Event = ({ item, id }) => {
@@ -30,19 +30,20 @@ const Event = ({ item, id }) => {
         </div>
 
         <div className='px-2 md:px-5 md:px-8 border md:border-none mb-3'>
-             <h2 className='text-lg text-left font-semibold text-[#C07F00] w-full left-0 pt-3 cursor-pointer' onClick={() => Router.push(`/event/${id}`)}>
-            {reduceCharacters(item?.title)}
-        </h2>
-        <p className='text-black/60 text-sm font-medium flex items overflow-hidden'> <span className='flex items-center'>{item?.date ? `${dayWeek}, ${monthName} ${dayOfMonth} ` : null}</span>
-                                <span> · {ampmDate(item?.time)} WAT</span>   </p>       
+            <h2 className='text-lg text-left font-semibold text-[#C07F00] w-full left-0 pt-3 cursor-pointer' onClick={() => Router.push(`/event/${id}`)}>
+                {reduceCharacters(item?.title)}
+            </h2>
+            <p className='text-black/60 text-sm font-medium flex items overflow-hidden'> <span className='flex items-center'>{item?.date ? `${dayWeek}, ${monthName} ${dayOfMonth} ` : null}</span>
+                {/* <span> · {ampmDate(item?.time)}</span>    */}
+                </p>
 
-                                <p className='text-black/60 text-sm font-medium flex items mt-1'> {item?.location}</p>    
+            <p className='text-black/60 text-sm font-medium flex items mt-1'> {item?.location}</p>
 
-                                {item?.attendees > 0 ? <>
-                                <CiUser/>
-                                <p className='text-black/60 text-sm font-medium flex items mt-3'> {item?.attendees?.length} attendees</p></>  : null}
-                                        
-            </div>       
+            {item?.attendees > 0 ? <>
+                <CiUser />
+                <p className='text-black/60 text-sm font-medium flex items mt-3'> {item?.attendees?.length} attendees</p></> : null}
+
+        </div>
     </div>
 }
 

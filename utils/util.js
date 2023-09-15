@@ -36,7 +36,6 @@ const sendEmail = (
 	note,
 	description,
 	passcode,
-	flier_url,
 	setSuccess,
 	setLoading
 ) => {
@@ -53,7 +52,6 @@ const sendEmail = (
 				note,
 				description,
 				passcode,
-				flier_url,
 			},
 			'yl1_EHEsw6Ub8EZDv'
 		)
@@ -300,10 +298,10 @@ export const registerAttendee = async (
 	let firebaseEvent = {};
 	if (eventSnap.exists()) {
 		firebaseEvent = eventSnap.data();
-		const attendees = firebaseEvent.attendees;
-		const result = attendees.filter((item) => item.email === email);
+		const attendees = firebaseEvent?.attendees;
+		const result = attendees?.filter((item) => item.email === email);
 
-		if (result.length === 0 && firebaseEvent.disableRegistration === false) {
+		if (result === undefined && firebaseEvent.disableRegistration === false) {
 			await updateDoc(eventRef, {
 				attendees: arrayUnion({
 					name,
@@ -326,7 +324,6 @@ export const registerAttendee = async (
 						firebaseEvent.note,
 						firebaseEvent.description,
 						passcode,
-						flierURL,
 						setSuccess,
 						setLoading
 					);

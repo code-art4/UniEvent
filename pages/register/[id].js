@@ -36,67 +36,69 @@ const RegisterPage = () => {
         }
         // setEmail("");
         // setName("");
-    };    
+    };
 
 
     const emailAndNameExists = email && name
 
     useEffect(() => {
         const fetchData = async () => {
-    try {
-      const docRef = doc(db, "events", query.id);
-      const docSnap = await getDoc(docRef);
-      let firebaseEvent = {};
-      if (docSnap.exists()) {
-        firebaseEvent = docSnap.data();
-      } else {
-        console.log("No such document!");
-      }
-      setEvent(firebaseEvent);
-      setLoadingEvent(false)
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    //   setLoadingEvent(false)
-    }    
-  };
+            try {
+                const docRef = doc(db, "events", query.id);
+                const docSnap = await getDoc(docRef);
+                let firebaseEvent = {};
+                if (docSnap.exists()) {
+                    firebaseEvent = docSnap.data();
+                } else {
+                    console.log("No such document!");
+                }
+                setEvent(firebaseEvent);
+                setLoadingEvent(false)
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                //   setLoadingEvent(false)
+            }
+        };
 
-  // Call fetchData when the component mounts or when emailAndNameExists changes
-  fetchData()} ,[query.id, emailAndNameExists])
+        // Call fetchData when the component mounts or when emailAndNameExists changes
+        fetchData()
+    }, [query.id, emailAndNameExists])
 
-    const EventButton = () => {        
-        const attendees = event.attendees;
-        const result = attendees.filter((item) => item.email === email);
-        if (result.length === 0) {
+    const EventButton = () => {
+        const attendees = event?.attendees;
+        const result = attendees?.filter((item) => item.email === email);
+
+        if (result?.length === 0 || attendees === undefined) {
             if (isFormValid && event?.accountNum && event?.bankName) {
                 return <PaystackButton
                     className='bg-[#FFD95A] p-3 font-medium hover:bg-[#C07F00] hover:text-[#FFF8DE] mb-3 rounded-md'
                     {...componentProps}
                 />
-            }else{
-                 return <button
-                type='submit'
-                className='bg-[#FFD95A] p-3 font-medium hover:bg-[#C07F00] hover:text-[#FFF8DE] mb-3 rounded-md'
-                onClick={handleSubmit}
-            >
-                GET TICKET
-            </button>
-            }           
+            } else {
+                return <button
+                    type='submit'
+                    className='bg-[#FFD95A] p-3 font-medium hover:bg-[#C07F00] hover:text-[#FFF8DE] mb-3 rounded-md'
+                    onClick={handleSubmit}
+                >
+                    GET TICKET
+                </button>
+            }
         }
 
 
         return <button
-                type='submit'
-                className='bg-[#FFD95A] p-3 font-medium hover:bg-[#C07F00] hover:text-[#FFF8DE] mb-3 rounded-md'
-                onClick={handleSubmit}
-            >
-                GET TICKET
-            </button>
+            type='submit'
+            className='bg-[#FFD95A] p-3 font-medium hover:bg-[#C07F00] hover:text-[#FFF8DE] mb-3 rounded-md'
+            onClick={handleSubmit}
+        >
+            GET TICKET
+        </button>
     }
 
 
     const isFormValid = email !== "" && name !== "";
 
-    if(loadingEvent){
+    if (loadingEvent) {
         return <Loading title='Loading event' />;
     }
 
@@ -126,14 +128,16 @@ const RegisterPage = () => {
         return numbers.slice(0, 2) + " / " + numbers.slice(2);
     }
 
-    const publicKey = "pk_test_d031e856e8b2f0a1b45e46ddaad881dacee9747e";
+    const publicKey = "pk_live_f2091b06253ee2084a8c9dedeb2b724bfa49e68b";
     const amount = event?.price + '00';
     console.log(amount)
 
     const componentProps = {
         email,
-        amount: Number(amount) + (Number(amount) * (15/100)),
+        name,
+        amount: Number(amount) + (Number(amount) * (2 / 100)),
         currency: "NGN",
+        recipient: event?.accountNumber,
         channels: ['card', 'bank', 'ussd', 'mobile_money', 'bank_transfer'],
         metadata: {
             accountNumber: event?.accountNumber,
@@ -142,18 +146,38 @@ const RegisterPage = () => {
         },
         publicKey,
         disabledRegistration: isFormValid ? false : true,
-        text: "GET TICKET",        
+        text: "GET TICKET",
         onSuccess: () => {
-              try {
-            registerAttendee(name, email, query.id, setSuccess, setLoading);
- setEmail('');
-            setName('');
-        } catch (e) {
-            console.log(e)
-        }
+            try {
+                registerAttendee(name, email, query.id, setSuccess, setLoading);
+                setEmail('');
+                setName('');
+            } catch (e) {
+                console.log(e)
+            }
         },
         onClose: () => alert("Wait! Do you want to proceed with not registering?"),
     };
+
+    const config = {
+        public_key: 'FLWPUBK_TEST-0147fe4f1327d8709fce74c7228131e2-X',
+        tx_ref: Date.now(),
+        amount: 100,
+        account_number: event?.accountNumber,
+        account_bank: "011",
+        currency: 'NGN',
+        payment_options: 'card,mobilemoney,ussd',
+        customer: {
+            email: 'user@gmail.com',
+            phone_number: '070********',
+            name: 'john doe',
+        },
+        customizations: {
+            title: 'My store',
+            description: 'Payment for items in cart',
+            logo: 'https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg',
+        },
+    };    
 
     return (
         <div>
@@ -196,7 +220,7 @@ const RegisterPage = () => {
                             <HiMail className=' absolute left-4 top-3 text-gray-300 text-xl' />
                         </div>
 
-<EventButton/>
+                        <EventButton />
                         {/* {isFormValid && event?.accountNum && event?.bankName ? <PaystackButton
                             className='bg-[#FFD95A] p-3 font-medium hover:bg-[#C07F00] hover:text-[#FFF8DE] mb-3 rounded-md'
                             {...componentProps}

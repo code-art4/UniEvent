@@ -11,7 +11,7 @@ import ShareEventModal from "../../../components/ShareEventModal";
 import ErrorPage from "../../../components/ErrorPage";
 
 export async function getServerSideProps(context) {
-    const docRef = doc(db, "events", context.query.id);
+    const docRef = doc(db, "events", context.query?.id);
     const docSnap = await getDoc(docRef);
 
     let firebaseEvent = {};
@@ -64,7 +64,7 @@ const ListEvent = ({ firebaseEvent }) => {
                 </div>
                 <Attendees
                     attendees={firebaseEvent.attendees}
-                    id={router.query.id}
+                    id={router.query?.id}
                     click={click}
                     setClick={setClick}
                     disableRegModal={disableRegModal}

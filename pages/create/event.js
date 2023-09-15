@@ -81,7 +81,7 @@ const CreateEvent = () => {
 		};
 	};
 
-	const publicKey = "pk_test_d031e856e8b2f0a1b45e46ddaad881dacee9747e";
+	const publicKey = "pk_live_f2091b06253ee2084a8c9dedeb2b724bfa49e68b";
 	const baseURL = 'https://api.paystack.co';
 
 	async function fetchBankNames() {
@@ -120,6 +120,34 @@ const CreateEvent = () => {
 	const dayName = dayOfWeek[eventDate.getDay()];
 	const monthName = months[eventDate.getMonth()];
 	const dayOfMonth = eventDate.getDate();
+
+
+	const accountNumber = '0022728151';
+	const bankCode = '063';
+
+	const apiUrl = `https://api.paystack.co/bank/resolve?account_number=${accountNumber}&bank_code=${bankCode}`;
+
+	const headers = {
+		Authorization: `Bearer ${publicKey}`,
+		'Cache-Control': 'no-cache',
+	};
+
+	async function fetchBankDetails() {
+		try {
+			const response = await axios.get(apiUrl, { headers });
+			console.log(response.data);
+		} catch (error) {
+			console.error('Error:', error.message);
+		}
+	}
+
+
+	useEffect(() => {
+		if (accountNum && bankName) {
+			fetchBankDetails(publicKey, accountNum, bankCode)
+		}
+	}, [accountNum, bankName])
+
 
 	return (
 		<div>
@@ -323,7 +351,7 @@ const CreateEvent = () => {
 						{buttonClicked ? (
 							<Loading title='May take longer time for image uploads' />
 						) : (
-							<button className='px-4 py-2 bg-[#C07F00] w-[200px] mt-3 text-white rounded-md hover:border hover:border-[#C07F00] hover:bg-white hover:text-[#C07F00] border border-transparent' onClick={handleSubmit} disabled={!title || !subtitle || !date || !time || !location || !flier}>
+							<button className='px-4 py-2 bg-[#C07F00] w-[200px] mt-3 text-white rounded-md hover:border hover:border-[#C07F00] hover:bg-white hover:text-[#C07F00] border border-transparent disabled:border-gray-500 disabled:border disabled:bg-white disabled:text-gray-500' onClick={handleSubmit} disabled={!title || !subtitle || !date || !time || !location || !flier}>
 								Create Event
 							</button>
 						)}

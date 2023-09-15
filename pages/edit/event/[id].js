@@ -79,7 +79,7 @@ const event = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setButtonClicked(true);
-		const eventDocRef = doc(db, "events", router.query.id);
+		const eventDocRef = doc(db, "events", router.query?.id);
 
 		if(price > 0){
 			await updateDoc(eventDocRef, {
@@ -89,9 +89,7 @@ const event = () => {
 				price,
 				location,
 				description,
-				note,
-				accountNum,
-				bankName,
+				note,				
 				flier_url: flier,
 				slug: createSlug(title),
 				attendees: [],
@@ -155,7 +153,7 @@ const event = () => {
 
 	// }
 
-	const publicKey = "pk_test_d031e856e8b2f0a1b45e46ddaad881dacee9747e";
+	const publicKey = "pk_live_f2091b06253ee2084a8c9dedeb2b724bfa49e68b";
 	const baseURL = 'https://api.paystack.co';
 
 	async function fetchBankNames() {
@@ -186,7 +184,7 @@ const event = () => {
 
 
 	if (!event) {
-		return <p>Loading...</p>
+		return <Loading title='Loading...' />
 	}
 
 	const eventDate = new Date(date); // Replace with your date variable
@@ -403,7 +401,7 @@ const event = () => {
 						{buttonClicked ? (
 							<Loading title='May take longer time for image uploads' />
 						) : (
-							<button className='px-4 py-2 bg-[#C07F00] w-[200px] mt-3 text-white rounded-md hover:border hover:border-[#C07F00] hover:bg-white hover:text-[#C07F00]' onClick={handleSubmit} disabled={!title || !subtitle || !date || !time || !location || !flier}>
+							<button className='px-4 py-2 bg-[#C07F00] w-[200px] mt-3 text-white rounded-md hover:border hover:border-[#C07F00] hover:bg-white hover:text-[#C07F00] disabled:border-gray-500 disabled:border disabled:bg-white disabled:text-gray-500' onClick={handleSubmit} disabled={!title || !subtitle || !date || !time || !location || !flier}>
 								Edit Event
 							</button>
 						)}
