@@ -181,7 +181,7 @@ const Events = () => {
                 </div>
 
 
-                <div className='w-full md:bg-black/[2%]'>
+                <div className='w-full'>
                     <div className="w-[80%] mx-auto mt-7 py-5 pr-6">
                         <div className='flex flex-col'>
                             <div className='md:mt-8 mt-2 flex lg:mt-0 lg:flex-shrink-0'>

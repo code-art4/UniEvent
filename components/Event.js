@@ -17,7 +17,7 @@ const Event = ({ item, id }) => {
 
 
     return <div
-        className='hover:shadow-md rounded-lg w-full md:justify-between relative overflow-hidden bg-white hover:scale-[102%] duration-300'
+        className='shadow-md rounded-lg w-full md:justify-between relative overflow-hidden bg-white hover:scale-[102%] duration-300'
     >
         <div className='w-full h-[11rem] md:mt-auto mt-3 border border-white/40 '>
             {item?.flier_url ? <Image
@@ -35,7 +35,7 @@ const Event = ({ item, id }) => {
             </h2>
             <p className='text-black/60 text-sm font-medium flex items overflow-hidden'> <span className='flex items-center'>{item?.date ? `${dayWeek}, ${monthName} ${dayOfMonth} ` : null}</span>
                 {/* <span> · {ampmDate(item?.time)}</span>    */}
-                </p>
+            </p>
 
             <p className='text-black/60 text-sm font-medium flex items mt-1'> {item?.location}</p>
 
