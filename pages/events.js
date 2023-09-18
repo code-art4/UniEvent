@@ -78,6 +78,8 @@ const Events = () => {
     }
 
 
+
+
     const Events = () => {
         if (search) {
             const freeEvents = filteredEvents?.filter(item => {
@@ -93,8 +95,9 @@ const Events = () => {
                     return <p className='text-center mt-32'>No events matches the search input</p>
                 } else {
                     return <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-x-6 gap-y-24 py-4 md:px-[50px] px-[10px] mb-12 mt-5">
-                        {freeEvents?.filter(event =>
-                            event?.disableRegistration === true || event?.attendees?.length === event?.expectedAttendees?.length).slice(0, displayCount)
+                        {freeEvents?.filter(events?.filter(event =>
+                            event?.data?.disableRegistration !== true
+                        )).slice(0, displayCount)
                             .map(item => (
 
                                 <Event key={item.id} item={item?.data} id={item?.id} />
@@ -106,8 +109,9 @@ const Events = () => {
                 if (paidEvents?.length <= 0) {
                     return <p className='text-center mt-32'>No events matches the search input</p>
                 } else {
-                    return <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-x-6 gap-y-24 py-4 md:px-[50px] px-[10px] mb-12 mt-5">{paidEvents?.filter(event =>
-                        event?.disableRegistration === true || event?.attendees?.length === event?.expectedAttendees?.length)?.slice(0, displayCount)
+                    return <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-x-6 gap-y-24 py-4 md:px-[50px] px-[10px] mb-12 mt-5">{paidEvents?.filter(events?.filter(event =>
+                        event?.data?.disableRegistration !== true
+                    ))?.slice(0, displayCount)
                         .map(item => (
 
                             <Event key={item.id} item={item?.data} id={item?.id} />
@@ -123,6 +127,7 @@ const Events = () => {
             const paidEvents = events?.filter(item => {
                 return (eventParams.paid && item?.data?.price > 0);
             })
+            
 
             if (eventParams.free) {
                 if (freeEvents.length <= 0) {
@@ -131,7 +136,7 @@ const Events = () => {
 
                 return <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-x-6 gap-y-24 py-4 md:px-[50px] px-[10px] mb-12 mt-5">
                     {freeEvents?.filter(event =>
-                        event?.disableRegistration === true || event?.attendees?.length === event?.expectedAttendees?.length)?.slice(0, displayCount)
+                        event?.data?.disableRegistration !== true)?.slice(0, displayCount)
                         .map(item => (
 
                             <Event key={item.id} item={item?.data} id={item?.id} />
@@ -140,10 +145,10 @@ const Events = () => {
             } else {
                 if (eventParams.paid && paidEvents.length <= 0) {
                     return <p className='text-center mt-24'>Paid events does not exist right now</p>
-                } else {
+                } else {                    
                     return <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-x-6 gap-y-24 py-4 md:px-[50px] px-[10px] mb-12 mt-5">
                         {paidEvents?.filter(event =>
-                            event?.disableRegistration === true || event?.attendees?.length === event?.expectedAttendees?.length)?.slice(0, displayCount)
+                            event?.data?.disableRegistration !== true)?.slice(0, displayCount)
                             .map(item => (
 
                                 <Event key={item.id} item={item?.data} id={item?.id} />
@@ -176,7 +181,7 @@ const Events = () => {
                 </div>
 
 
-                <div className='w-full md:bg-black/[8%]'>
+                <div className='w-full md:bg-black/[2%]'>
                     <div className="w-[80%] mx-auto mt-7 py-5 pr-6">
                         <div className='flex flex-col'>
                             <div className='md:mt-8 mt-2 flex lg:mt-0 lg:flex-shrink-0'>

@@ -46,7 +46,7 @@ const ListEvent = ({ firebaseEvent }) => {
                 <meta name='viewport' content='width=device-width, initial-scale=1' />
                 <link rel='icon' href='/favicon.ico' />
             </Head>
-            <main className='relative w-full'>
+            <main className='relative w-full md:w-[85%] lg:w-[70%] mx-auto md:my-8'>
                 <div className='h-[45vh] p-3 flex flex-col items-center justify-center bg-[#FFD95A]  registergray w-full' style={{
                     background: `${firebaseEvent?.flier_url ? `url(${firebaseEvent?.flier_url})` : 'grey'} `
                 }}>

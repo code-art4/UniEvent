@@ -75,8 +75,8 @@ export default function Home() {
 					</div>
 				</section>
 				<HomeSection loading={loading} events={events?.filter(event =>
-  event?.disableRegistration === true || event?.attendees?.length === event?.expectedAttendees?.length
-)} />
+					event?.data?.disableRegistration !== true
+				)} />
 				<footer class="text-center py-4">
 					<p class="text-gray-600">&copy; 2023 Unilorin Events Management. All rights reserved.</p>
 				</footer>
