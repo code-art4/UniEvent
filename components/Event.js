@@ -29,7 +29,7 @@ const Event = ({ item, id }) => {
             /> : null}
         </div>
 
-        <div className='px-2 md:px-5 md:px-8 border md:border-none mb-3'>
+        <div className='px-2 md:px-5 md:px-8 mb-3'>
             <h2 className='text-lg text-left font-semibold text-[#C07F00] w-full left-0 pt-3 cursor-pointer' onClick={() => Router.push(`/event/${id}`)}>
                 {reduceCharacters(item?.title)}
             </h2>
