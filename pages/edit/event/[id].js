@@ -460,7 +460,7 @@ const event = () => {
 					</div>
 				</div>
 			</div> : null}
-			<MdCancel className='fixed top-7 right-6 text-4xl text-[red] cursor-pointer z-[65]' onClick={() => setOpenEventPreview(false)} />
+			{openEventPreview ? <MdCancel className='fixed top-7 right-6 text-4xl text-[red] cursor-pointer z-[65]' onClick={() => setOpenEventPreview(false)} /> : null}
 			{openEventPreview ? <div className='fixed w-full h-screen bg-black/70 z-[45] top-0 left-0' onClick={() => setOpenEventPreview(false)}>
 			</div> : null}
 		</div>
