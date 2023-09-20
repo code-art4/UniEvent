@@ -93,7 +93,6 @@ const event = () => {
 				note,
 				flier_url: flier,
 				slug: createSlug(title),
-				attendees: [],
 				disableRegistration: false,
 			}).then(() => {
 				setTimeout(() => setButtonClicked(false), 1000)
