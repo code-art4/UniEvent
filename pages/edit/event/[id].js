@@ -84,6 +84,7 @@ const event = () => {
 		if (price > 0) {
 			await updateDoc(eventDocRef, {
 				title,
+				subtitle,
 				date,
 				time,
 				price,
@@ -104,6 +105,7 @@ const event = () => {
 		} else {
 			await updateDoc(eventDocRef, {
 				title,
+				subtitle,
 				date,
 				time,
 				price,
