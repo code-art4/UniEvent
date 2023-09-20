@@ -7,7 +7,7 @@ import { BsGithub, BsTwitter } from "react-icons/bs";
 const Nav = () => {
 	const [hamburger, setHamburger] = useState(false);
 	return (
-		<div className='h-max py-5 lg:py-0 lg:h-[10vh] flex items-center justify-between px-[20px] w-[75%] top-0 mx-auto'>
+		<div className='h-max py-5 lg:py-0 lg:h-[10vh] flex items-center justify-between px-[20px] top-0'>
 			<Link href='/'>
 				<h1
 					className='text-xl font-bold text-gray-300
