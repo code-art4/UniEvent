@@ -57,7 +57,7 @@ http://localhost:5173 (or the next available port)
 ### 📁 Project Structure
 
 <pre lang="nohighlight"> 
-├── src/ │ 
+├── src/ 
   ├── components/ # Reusable UI components │ 
   ├── pages/ # Page-level components │ 
   ├── hooks/ # Custom React hooks │ 
