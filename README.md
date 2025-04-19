@@ -1,54 +1,93 @@
-# React + TypeScript + Vite
+# 🎟️ Uni Event & Ticketing Management System — v2.01
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the **v2.01** branch of the Uni Event and Ticketing Management System.
 
-Currently, two official plugins are available:
+This branch introduces a full refresh of the platform — improving the UI, cleaning up the structure, and switching from **Stripe** to **Quickteller** for payment processing. It is the **active and default branch** for ongoing development.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+> 🧠 Note: The `main` branch contains an older version, but all new work happens here in `v-2.01`.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠️ Tech Stack
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- ⚛️ React
+- ⚡ Vite
+- 🟦 TypeScript
+- 🎨 Tailwind CSS
+- 📦 **npm** (used for package management — see `package-lock.json`)
+
+---
+
+## 🚀 Getting Started
+
+Follow the steps below to set up and run the project locally.
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/your-repo-name.git
+cd your-repo-name
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Checkout the Active Branch
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+You should already be on v-2.01 since it's the default, but if not:
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+git checkout v-2.01
 ```
+
+### 3. Install Dependencies
+
+The project uses npm, as shown by the presence of package-lock.json.
+
+```bash
+npm install
+```
+
+### 4. Run the Development Server
+
+```bash
+npm run dev
+```
+
+Your app should now be live at:
+http://localhost:5173 (or the next available port)
+
+### 📁 Project Structure
+
+<pre lang="nohighlight"> ```bash ├── src/ │ ├── components/ # Reusable UI components │ ├── pages/ # Page-level components │ ├── hooks/ # Custom React hooks │ ├── utils/ # Utility/helper functions │ └── assets/ # Images, icons, etc. ├── public/ # Static files served as-is ├── index.html # App entry HTML ├── tailwind.config.ts # Tailwind configuration ├── vite.config.ts # Vite dev/build settings ├── tsconfig.json # TypeScript configuration ├── package.json └── package-lock.json # npm-specific lock file ``` </pre>
+
+✨ What's New in v2.01
+
+- 💅 A fresh UI experience using Tailwind CSS
+
+- 🔄 Migration from Stripe to Quickteller for handling payments
+
+- 🧼 A cleaner codebase and folder structure
+
+- ⚡️ Powered by Vite for fast builds and instant HMR
+
+- 🧠 More maintainable and scalable setup
+
+🤝 Contributing
+
+1. You're welcome to contribute! Here’s how:
+
+2. Fork this repository
+
+3. Create a new branch
+
+4. Work on your feature or fix
+
+5. Open a pull request targeting the v-2.01 branch
+
+🙌 Support
+
+If you run into any issues or have ideas, open an issue or reach out.
+
+Thanks for checking out the project! 🚀
+
+---
+
+Let me know if you’d like a `Quick Start` code snippet section, an `.env.example` file setup, or Quickteller integration docs when you start working on that!
