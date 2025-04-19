@@ -58,17 +58,11 @@ http://localhost:5173 (or the next available port)
 
 <pre lang="nohighlight"> 
 ├── src/ 
-  │ 
   ├── components/ # Reusable UI components 
-  │ 
   ├── pages/ # Page-level components 
-  │ 
   ├── hooks/ # Custom React hooks 
-  │ 
   ├── utils/ # Helper functions 
-  │ 
   └── assets/ # Images, icons, etc. 
-|
 ├── public/ # Static files served as-is 
 ├── index.html # Entry HTML file 
 ├── tailwind.config.ts # TailwindCSS config 
