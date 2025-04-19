@@ -56,7 +56,13 @@ http://localhost:5173 (or the next available port)
 
 ### 📁 Project Structure
 
-<pre lang="nohighlight"> ```bash ├── src/ │ ├── components/ # Reusable UI components │ ├── pages/ # Page-level components │ ├── hooks/ # Custom React hooks │ ├── utils/ # Utility/helper functions │ └── assets/ # Images, icons, etc. ├── public/ # Static files served as-is ├── index.html # App entry HTML ├── tailwind.config.ts # Tailwind configuration ├── vite.config.ts # Vite dev/build settings ├── tsconfig.json # TypeScript configuration ├── package.json └── package-lock.json # npm-specific lock file ``` </pre>
+<pre lang="nohighlight"> 
+
+```bash
+ ├── src/ │ ├── components/ # Reusable UI components │ ├── pages/ # Page-level components │ ├── hooks/ # Custom React hooks │ ├── utils/ # Utility/helper functions │ └── assets/ # Images, icons, etc. ├── public/ # Static files served as-is ├── index.html # App entry HTML ├── tailwind.config.ts # Tailwind configuration ├── vite.config.ts # Vite dev/build settings ├── tsconfig.json # TypeScript configuration ├── package.json └── package-lock.json # npm-specific lock file 
+ ``` 
+ 
+ </pre>
 
 ✨ What's New in v2.01
 
