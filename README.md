@@ -58,11 +58,17 @@ http://localhost:5173 (or the next available port)
 
 <pre lang="nohighlight"> 
 ├── src/ 
-  ├── components/ # Reusable UI components │ 
-  ├── pages/ # Page-level components │ 
-  ├── hooks/ # Custom React hooks │ 
-  ├── utils/ # Helper functions │ 
+  │ 
+  ├── components/ # Reusable UI components 
+  │ 
+  ├── pages/ # Page-level components 
+  │ 
+  ├── hooks/ # Custom React hooks 
+  │ 
+  ├── utils/ # Helper functions 
+  │ 
   └── assets/ # Images, icons, etc. 
+|
 ├── public/ # Static files served as-is 
 ├── index.html # Entry HTML file 
 ├── tailwind.config.ts # TailwindCSS config 
@@ -70,6 +76,7 @@ http://localhost:5173 (or the next available port)
 ├── tsconfig.json # TypeScript config 
 ├── package.json 
 └── package-lock.json # npm lock file ``` 
+
 </pre>
 
 ✨ What's New in v2.01
