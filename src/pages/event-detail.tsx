@@ -2,21 +2,21 @@ import React, { useState, useContext } from 'react';
 import { useParams, useLocation } from 'react-router';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { EventWithDetails, TicketType } from '@shared/schema';
-import { formatDateRange, formatCurrency } from '@/lib/utils';
+import { formatDateRange, formatCurrency } from '../lib/utils';
 import { AuthContext } from '../App';
-import { Button } from '@components/ui/button';
+import { Button } from '../components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@components/ui/dialog';
-import { Skeleton } from '@components/ui/skeleton';
-import { Badge } from '@components/ui/badge';
-import SeatSelection from '@components/events/seat-selection';
-import OrderSummary from '@components/tickets/order-summary';
-import { useToast } from '@/hooks/use-toast';
+} from '../components/ui/dialog';
+import { Skeleton } from '../components/ui/skeleton';
+import { Badge } from '../components/ui/badge';
+import SeatSelection from '../components/events/seat-selection';
+import OrderSummary from '../components/tickets/order-summary';
+import { useToast } from '../hooks/use-toast';
 import { Calendar, MapPin, Users, Share2, Music, Flame } from 'lucide-react';
 
 export default function EventDetail() {

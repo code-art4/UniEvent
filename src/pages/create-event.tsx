@@ -2,22 +2,22 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useLocation } from 'react-router';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { AuthContext } from '../App';
-import { queryClient, apiRequest } from '@/lib/queryClient';
+import { queryClient, apiRequest } from '../lib/queryClient';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { insertEventSchema } from '@shared/schema';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '../hooks/use-toast';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@components/ui/card';
-import { Button } from '@components/ui/button';
-import { Input } from '@components/ui/input';
-import { Textarea } from '@components/ui/textarea';
+} from '../components/ui/card';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
+import { Textarea } from '../components/ui/textarea';
 import {
   Form,
   FormControl,
@@ -26,25 +26,25 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@components/ui/form';
+} from '../components/ui/form';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@components/ui/select';
-import { Switch } from '@components/ui/switch';
-import { Separator } from '@components/ui/separator';
-import { Calendar } from '@components/ui/calendar';
+} from '../components/ui/select';
+import { Switch } from '../components/ui/switch';
+import { Separator } from '../components/ui/separator';
+import { Calendar } from '../components/ui/calendar';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@components/ui/popover';
+} from '../components/ui/popover';
 import { CalendarIcon, Loader2 } from 'lucide-react';
 import { format } from 'date-fns';
-import { cn } from '@/lib/utils';
+import { cn } from '../lib/utils';
 
 const extendedEventSchema = insertEventSchema
   .extend({

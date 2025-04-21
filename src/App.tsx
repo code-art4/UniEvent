@@ -1,20 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router';
 import { queryClient } from './lib/queryClient';
 import { QueryClientProvider } from '@tanstack/react-query';
-// import { Toaster } from './components/ui/toaster';
+import { Toaster } from './components/ui/toaster';
 
 import Navbar from './components/layout/navbar';
 import Footer from './components/layout/footer';
 import Home from './pages/home';
-// import EventDetail from './pages/event-detail';
+import EventDetail from './pages/event-detail';
 import MyTickets from './pages/my-tickets';
 // import CreateEvent from './pages/create-event';
-// import Dashboard from './pages/dashboard';
-// import Checkout from './pages/checkout';
+import Dashboard from './pages/dashboard';
+import Checkout from './pages/checkout';
 // import AuthPage from './pages/auth-page';
-// import NotFound from './pages/not-found';
-import { useEffect, useState } from 'react';
+import NotFound from './pages/not-found';
 import { User } from '@shared/schema';
 
 export type AuthContextType = {
@@ -67,15 +66,15 @@ function Router() {
         <Navbar />
         <main className='flex-grow'>
           <Routes>
-            <Route index element={<Home />} />
+            {/* <Route index element={<Home />} /> */}
             <Route path='/' element={<Home />} />
-            {/* <Route path='/events/:id' component={EventDetail} /> */}
-            <Route path='/tickets' component={MyTickets} />
+            <Route path='/events/:id' element={EventDetail} />
+            <Route path='/tickets' element={MyTickets} />
             {/* <Route path='/create-event' component={CreateEvent} /> */}
             {/* <Route path='/dashboard' component={Dashboard} /> */}
             {/* <Route path='/checkout/:eventId' component={Checkout} /> */}
             {/* <Route path='/auth' component={AuthPage} />  */}
-            {/* <Route element={<NotFound />} /> */}
+            <Route element={<NotFound />} />
           </Routes>
         </main>
         <Footer />

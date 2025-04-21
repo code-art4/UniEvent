@@ -5,10 +5,10 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AuthContext } from '../App';
-import { apiRequest } from '@/lib/queryClient';
-import { useToast } from '@/hooks/use-toast';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@components/ui/tabs';
-import { Button } from '@components/ui/button';
+import { apiRequest } from '../lib/queryClient';
+import { useToast } from '../hooks/use-toast';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
+import { Button } from '../components/ui/button';
 import {
   Card,
   CardContent,
@@ -16,7 +16,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@components/ui/card';
+} from '../components/ui/card';
 import {
   Form,
   FormControl,
@@ -24,8 +24,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@components/ui/form';
-import { Input } from '@components/ui/input';
+} from '../components/ui/form';
+import { Input } from '../components/ui/input';
 import { Loader2 } from 'lucide-react';
 import { insertUserSchema } from '@shared/schema';
 
@@ -34,17 +34,17 @@ const loginSchema = z.object({
   password: z.string().min(1, 'Password is required'),
 });
 
-const registerSchema = insertUserSchema
-  .extend({
-    confirmPassword: z.string().min(1, 'Please confirm your password'),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ['confirmPassword'],
-  });
+// const registerSchema = insertUserSchema
+//   .extend({
+//     confirmPassword: z.string().min(1, 'Please confirm your password'),
+//   })
+//   .refine((data) => data.password === data.confirmPassword, {
+//     message: "Passwords don't match",
+//     path: ['confirmPassword'],
+//   });
 
 type LoginFormValues = z.infer<typeof loginSchema>;
-type RegisterFormValues = z.infer<typeof registerSchema>;
+// type RegisterFormValues = z.infer<typeof registerSchema>;
 
 export default function AuthPage() {
   const [location, setLocation] = useLocation();
@@ -68,7 +68,8 @@ export default function AuthPage() {
   });
 
   const registerForm = useForm<RegisterFormValues>({
-    resolver: zodResolver(registerSchema),
+    // resolver: zodResolver(registerSchema),
+    resolver:zodResolver(),
     defaultValues: {
       username: '',
       email: '',
