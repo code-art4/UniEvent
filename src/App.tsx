@@ -5,7 +5,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 // import { Toaster } from './components/ui/toaster';
 
 import Navbar from './components/layout/navbar';
-// import Footer from './components/layout/footer';
+import Footer from './components/layout/footer';
 import Home from './pages/home';
 // import EventDetail from './pages/event-detail';
 import MyTickets from './pages/my-tickets';
@@ -78,7 +78,7 @@ function Router() {
             {/* <Route element={<NotFound />} /> */}
           </Routes>
         </main>
-        {/* <Footer /> */}
+        <Footer />
       </div>
     </AuthContext.Provider>
   );

@@ -15,9 +15,7 @@ export default function Home() {
 
   useEffect(() => {
     setQueryParams(new URLSearchParams(pathname.split('?')[1]));
-    console.log(queryParams)
   }, [pathname]);
-
 
   const categoryId = queryParams.get('categoryId');
   const search = queryParams.get('search');
