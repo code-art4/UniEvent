@@ -7,7 +7,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { AuthContext } from '../App';
 import { apiRequest } from '../lib/queryClient';
 import { useToast } from '../hooks/use-toast';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '../components/ui/tabs';
 import { Button } from '../components/ui/button';
 import {
   Card,
@@ -27,7 +32,7 @@ import {
 } from '../components/ui/form';
 import { Input } from '../components/ui/input';
 import { Loader2 } from 'lucide-react';
-import { insertUserSchema } from '@shared/schema';
+// import { insertUserSchema } from '@shared/schema';
 
 const loginSchema = z.object({
   username: z.string().min(1, 'Username is required'),
@@ -47,17 +52,17 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 // type RegisterFormValues = z.infer<typeof registerSchema>;
 
 export default function AuthPage() {
-  const [location, setLocation] = useLocation();
+  // const [location, setLocation] = useLocation();
   const { isAuthenticated, isLoading: authLoading } = useContext(AuthContext);
-  const { toast } = useToast();
+  // const { toast } = useToast();
   const [activeTab, setActiveTab] = useState<string>('login');
 
-  // Redirect if already logged in
-  useEffect(() => {
-    if (!authLoading && isAuthenticated) {
-      setLocation('/');
-    }
-  }, [authLoading, isAuthenticated, setLocation]);
+  // // Redirect if already logged in
+  // useEffect(() => {
+  //   if (!authLoading && isAuthenticated) {
+  //     setLocation('/');
+  //   }
+  // }, [authLoading, isAuthenticated, setLocation]);
 
   const loginForm = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -69,7 +74,7 @@ export default function AuthPage() {
 
   const registerForm = useForm<RegisterFormValues>({
     // resolver: zodResolver(registerSchema),
-    resolver:zodResolver(),
+    resolver: zodResolver(),
     defaultValues: {
       username: '',
       email: '',
@@ -132,13 +137,13 @@ export default function AuthPage() {
     registerMutation.mutate(data);
   };
 
-  if (authLoading || isAuthenticated) {
-    return (
-      <div className='flex justify-center items-center min-h-[500px]'>
-        <Loader2 className='h-8 w-8 animate-spin text-primary-600' />
-      </div>
-    );
-  }
+  // if (authLoading || isAuthenticated) {
+  //   return (
+  //     <div className='flex justify-center items-center min-h-[500px]'>
+  //       <Loader2 className='h-8 w-8 animate-spin text-primary-600' />
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className='grid md:grid-cols-2 gap-8 py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-[calc(100vh-12rem)]'>
@@ -150,7 +155,7 @@ export default function AuthPage() {
             onValueChange={setActiveTab}
             className='w-full'
           >
-            <TabsList className='grid w-full grid-cols-2 mb-6'>
+            <TabsList className='w-full grid grid-cols-2 space-x-6 mb-6'>
               <TabsTrigger value='login'>Login</TabsTrigger>
               <TabsTrigger value='register'>Register</TabsTrigger>
             </TabsList>

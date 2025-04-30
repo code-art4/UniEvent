@@ -9,10 +9,10 @@ import Footer from './components/layout/footer';
 import Home from './pages/home';
 import EventDetail from './pages/event-detail';
 import MyTickets from './pages/my-tickets';
-// import CreateEvent from './pages/create-event';
+import CreateEvent from './pages/create-event';
 import Dashboard from './pages/dashboard';
 import Checkout from './pages/checkout';
-// import AuthPage from './pages/auth-page';
+import AuthPage from './pages/auth-page';
 import NotFound from './pages/not-found';
 import { User } from '@shared/schema';
 
@@ -66,15 +66,15 @@ function Router() {
         <Navbar />
         <main className='flex-grow'>
           <Routes>
-            {/* <Route index element={<Home />} /> */}
+            <Route index element={<Home />} />
             <Route path='/' element={<Home />} />
-            <Route path='/events/:id' element={EventDetail} />
-            <Route path='/tickets' element={MyTickets} />
-            {/* <Route path='/create-event' component={CreateEvent} /> */}
+            <Route path='/events/:id' element={<EventDetail />} />
+            <Route path='/tickets' element={<MyTickets />} />
+            <Route path='/create-event' element={<CreateEvent />} />
             {/* <Route path='/dashboard' component={Dashboard} /> */}
             {/* <Route path='/checkout/:eventId' component={Checkout} /> */}
-            {/* <Route path='/auth' component={AuthPage} />  */}
-            <Route element={<NotFound />} />
+            <Route path='/auth' element={<AuthPage />} />
+            <Route path='*' element={<NotFound />} />
           </Routes>
         </main>
         <Footer />

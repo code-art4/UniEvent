@@ -1,16 +1,24 @@
 import React, { useContext, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useLocation } from 'react-router';
-import { PurchaseWithDetails } from '@shared/schema';
+import { useLocation, useNavigate } from 'react-router';
+// import { PurchaseWithDetails } from '@shared/schema';
 import { AuthContext } from '../App';
 import TicketItem from '../components/tickets/ticket-item';
 import { Button } from '../components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '../components/ui/tabs';
 import { Skeleton } from '../components/ui/skeleton';
 import { Calendar, Ticket } from 'lucide-react';
 
 export default function MyTickets() {
-  const [location, setLocation] = useLocation();
+  const { pathname: location } = useLocation();
+
+  const navigate = useNavigate();
+
   const { isAuthenticated, isLoading: authLoading } = useContext(AuthContext);
 
   const { data: purchases, isLoading } = useQuery<PurchaseWithDetails[]>({
@@ -20,9 +28,9 @@ export default function MyTickets() {
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
-      setLocation('/login?redirect=/tickets');
+      navigate('/auth');
     }
-  }, [authLoading, isAuthenticated, setLocation]);
+  }, [authLoading, isAuthenticated]);
 
   if (authLoading) {
     return (

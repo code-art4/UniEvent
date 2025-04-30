@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { AuthContext } from '../App';
 import { queryClient, apiRequest } from '../lib/queryClient';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { insertEventSchema } from '@shared/schema';
+// import { insertEventSchema } from '@shared/schema';
 import { useToast } from '../hooks/use-toast';
 import {
   Card,
@@ -46,21 +46,23 @@ import { CalendarIcon, Loader2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '../lib/utils';
 
-const extendedEventSchema = insertEventSchema
-  .extend({
-    startDate: z.coerce.date(),
-    endDate: z.coerce.date(),
-    hasSeating: z.boolean().default(false),
-  })
-  .refine((data) => data.endDate >= data.startDate, {
-    message: 'End date must be after start date',
-    path: ['endDate'],
-  });
+// const extendedEventSchema = insertEventSchema
+//   .extend({
+//     startDate: z.coerce.date(),
+//     endDate: z.coerce.date(),
+//     hasSeating: z.boolean().default(false),
+//   })
+//   .refine((data) => data.endDate >= data.startDate, {
+//     message: 'End date must be after start date',
+//     path: ['endDate'],
+//   });
 
-type EventFormValues = z.infer<typeof extendedEventSchema>;
+// type EventFormValues = z.infer<typeof extendedEventSchema>;
 
 export default function CreateEvent() {
-  const [location, setLocation] = useLocation();
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const {
     user,
     isAuthenticated,
@@ -75,16 +77,18 @@ export default function CreateEvent() {
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
-      setLocation('/login?redirect=/create-event');
+      // navigate('/login?redirect=/create-event');
     }
-  }, [authLoading, isAuthenticated, setLocation]);
+  }, [authLoading, isAuthenticated]);
 
   const { data: categories } = useQuery({
     queryKey: ['/api/categories'],
   });
 
-  const form = useForm<EventFormValues>({
-    resolver: zodResolver(extendedEventSchema),
+  // const form = useForm<EventFormValues>({
+  const form = useForm({
+    // resolver: zodResolver(extendedEventSchema),
+    resolver: zodResolver(),
     defaultValues: {
       title: '',
       description: '',
@@ -115,7 +119,7 @@ export default function CreateEvent() {
       });
       queryClient.invalidateQueries({ queryKey: ['/api/events'] });
       queryClient.invalidateQueries({ queryKey: ['/api/events/organizer/me'] });
-      setLocation(`/events/${data.id}`);
+      useNavigate(`/events/${data.id}`);
     },
     onError: (error) => {
       toast({
@@ -138,23 +142,23 @@ export default function CreateEvent() {
     );
   }
 
-  if (!isAuthenticated) {
-    return null; // Will redirect to login
-  }
+  // if (!isAuthenticated) {
+  //   return null; // Will redirect to login
+  // }
 
-  if (!user?.isOrganizer) {
-    return (
-      <div className='max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8 text-center'>
-        <h1 className='text-3xl font-bold text-gray-900'>Access Denied</h1>
-        <p className='mt-4 text-lg text-gray-600'>
-          You need to be registered as an event organizer to create events.
-        </p>
-        <Button className='mt-6' onClick={() => setLocation('/')}>
-          Return to Home
-        </Button>
-      </div>
-    );
-  }
+  // if (!user?.isOrganizer) {
+  //   return (
+  //     <div className='max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8 text-center'>
+  //       <h1 className='text-3xl font-bold text-gray-900'>Access Denied</h1>
+  //       <p className='mt-4 text-lg text-gray-600'>
+  //         You need to be registered as an event organizer to create events.
+  //       </p>
+  //       <Button className='mt-6' onClick={() => navigate('/')}>
+  //         Return to Home
+  //       </Button>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className='max-w-5xl mx-auto py-12 px-4 sm:px-6 lg:px-8'>
