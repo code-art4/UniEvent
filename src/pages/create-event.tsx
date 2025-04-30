@@ -77,7 +77,7 @@ export default function CreateEvent() {
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
-      // navigate('/login?redirect=/create-event');
+      // navigate('/auth?redirect=/create-event');
     }
   }, [authLoading, isAuthenticated]);
 

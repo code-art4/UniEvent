@@ -71,7 +71,7 @@ function Router() {
             <Route path='/events/:id' element={<EventDetail />} />
             <Route path='/tickets' element={<MyTickets />} />
             <Route path='/create-event' element={<CreateEvent />} />
-            {/* <Route path='/dashboard' component={Dashboard} /> */}
+            <Route path='/dashboard' element={<Dashboard />} />
             {/* <Route path='/checkout/:eventId' component={Checkout} /> */}
             <Route path='/auth' element={<AuthPage />} />
             <Route path='*' element={<NotFound />} />

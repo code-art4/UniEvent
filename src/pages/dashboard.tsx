@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useLocation } from 'react-router';
-import { Event, User, PurchaseWithDetails } from '@shared/schema';
+import { useLocation, useNavigate } from 'react-router';
+// import { Event, User, PurchaseWithDetails } from '@shared/schema';
 import { AuthContext } from '../App';
 import {
   Card,
@@ -9,12 +9,17 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@components/ui/card';
-import { Button } from '@components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@components/ui/tabs';
-import { Skeleton } from '@components/ui/skeleton';
-import EventCard from '@components/events/event-card';
-import TicketItem from '@components/tickets/ticket-item';
+} from '../components/ui/card';
+import { Button } from '../components/ui/button';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '../components/ui/tabs';
+import { Skeleton } from '../components/ui/skeleton';
+import EventCard from '../components/events/event-card';
+import TicketItem from '../components/tickets/ticket-item';
 import { BarChart, LineChart, PieChart } from 'lucide-react';
 import {
   Chart as ChartJS,
@@ -44,7 +49,8 @@ ChartJS.register(
 );
 
 export default function Dashboard() {
-  const [location, setLocation] = useLocation();
+  const location = useLocation();
+  const navigate = useNavigate();
   const {
     user,
     isAuthenticated,
@@ -55,9 +61,9 @@ export default function Dashboard() {
   // Handle authentication
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
-      setLocation('/login?redirect=/dashboard');
+      // navigate('/auth?redirect=/dashboard');
     }
-  }, [authLoading, isAuthenticated, setLocation]);
+  }, [authLoading, isAuthenticated, navigate]);
 
   // Get user events (if organizer)
   const { data: events, isLoading: eventsLoading } = useQuery<Event[]>({
@@ -73,23 +79,23 @@ export default function Dashboard() {
     enabled: isAuthenticated,
   });
 
-  if (authLoading) {
-    return (
-      <div className='max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8'>
-        <Skeleton className='h-10 w-48 mb-8' />
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
-          {[...Array(3)].map((_, i) => (
-            <Skeleton key={i} className='h-32 w-full' />
-          ))}
-        </div>
-        <Skeleton className='h-96 w-full mt-8' />
-      </div>
-    );
-  }
+  // if (authLoading) {
+  //   return (
+  //     <div className='max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8'>
+  //       <Skeleton className='h-10 w-48 mb-8' />
+  //       <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+  //         {[...Array(3)].map((_, i) => (
+  //           <Skeleton key={i} className='h-32 w-full' />
+  //         ))}
+  //       </div>
+  //       <Skeleton className='h-96 w-full mt-8' />
+  //     </div>
+  //   );
+  // }
 
-  if (!isAuthenticated) {
-    return null; // Will redirect
-  }
+  // if (!isAuthenticated) {
+  //   return null; // Will redirect
+  // }
 
   // Prepare data for analytics
   const salesData = {
@@ -162,7 +168,7 @@ export default function Dashboard() {
         </div>
         {user?.isOrganizer && (
           <Button
-            onClick={() => setLocation('/create-event')}
+            onClick={() => navigate('/create-event')}
             className='md:self-start'
           >
             Create New Event
@@ -258,7 +264,7 @@ export default function Dashboard() {
                     <p className='text-gray-500 mb-4'>
                       You haven't created any events yet.
                     </p>
-                    <Button onClick={() => setLocation('/create-event')}>
+                    <Button onClick={() => navigate('/create-event')}>
                       Create Your First Event
                     </Button>
                   </div>
@@ -443,9 +449,7 @@ export default function Dashboard() {
                     <p className='text-gray-500 mb-4'>
                       You haven't purchased any tickets yet.
                     </p>
-                    <Button onClick={() => setLocation('/')}>
-                      Browse Events
-                    </Button>
+                    <Button onClick={() => navigate('/')}>Browse Events</Button>
                   </div>
                 )}
               </CardContent>
